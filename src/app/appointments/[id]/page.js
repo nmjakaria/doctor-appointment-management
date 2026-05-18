@@ -1,9 +1,10 @@
 import { Suspense } from "react";
-import { getDoctorById } from "@/lib/actions";
 import { notFound } from "next/navigation";
-import { Image, Chip, Divider, Card, CardBody } from "@heroui/react";
 import { Star, MapPin, Award, Building, DollarSign } from "lucide-react";
 import BookingButton from "@/components/BookingButton";
+import { getDoctorById } from "@/lib/actions";
+import Image from "next/image";
+import { Card, CardContent, Chip } from "@heroui/react";
 
 export default async function DoctorDetailsPage({ params }) {
     const { id } = await params;
@@ -20,6 +21,7 @@ export default async function DoctorDetailsPage({ params }) {
                 <div className="lg:col-span-1 space-y-6">
                     <div className="relative rounded-3xl overflow-hidden shadow-xl aspect-square">
                         <Image
+                            fill
                             src={doctor.image || "https://picsum.photos/seed/doctor/600/600"}
                             alt={doctor.name}
                             className="object-cover w-full h-full"
@@ -27,7 +29,7 @@ export default async function DoctorDetailsPage({ params }) {
                     </div>
                     
                     <Card className="border-none bg-primary/5 p-4">
-                        <CardBody className="grid grid-cols-2 gap-4">
+                        <CardContent className="grid grid-cols-2 gap-4">
                             <div className="text-center p-4 bg-white rounded-2xl shadow-sm">
                                 <p className="text-2xl font-bold text-primary">{doctor.experience}+</p>
                                 <p className="text-tiny text-default-500 uppercase font-bold">Years Exp</p>
@@ -36,7 +38,7 @@ export default async function DoctorDetailsPage({ params }) {
                                 <p className="text-2xl font-bold text-primary">{doctor.rating}</p>
                                 <p className="text-tiny text-default-500 uppercase font-bold">Rating</p>
                             </div>
-                        </CardBody>
+                        </CardContent>
                     </Card>
                 </div>
 
@@ -59,7 +61,7 @@ export default async function DoctorDetailsPage({ params }) {
                         </div>
                     </div>
 
-                    <Divider />
+                    {/* <Divider /> */}
 
                     <div className="space-y-4 text-lg text-default-600 leading-relaxed">
                         <h3 className="text-2xl font-bold text-foreground">About Doctor</h3>

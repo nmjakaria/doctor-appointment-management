@@ -31,16 +31,16 @@ export async function getDoctors(query = "", specialty = "all") {
     ];
 
     let filtered = doctorsList;
-    
+
     if (query) {
-      filtered = filtered.filter(d => 
-        d.name?.toLowerCase().includes(query.toLowerCase()) || 
+      filtered = filtered.filter(d =>
+        d.name?.toLowerCase().includes(query.toLowerCase()) ||
         d.hospital?.toLowerCase().includes(query.toLowerCase())
       );
     }
-    
+
     if (specialty !== "all") {
-      filtered = filtered.filter(d => 
+      filtered = filtered.filter(d =>
         d.specialty?.toLowerCase() === specialty.toLowerCase()
       );
     }
@@ -52,6 +52,44 @@ export async function getDoctors(query = "", specialty = "all") {
 
   } catch (error) {
     console.error("Error in getDoctors Action:", error);
-    return { doctors: [], specialties: [{ label: "All Specialities", value: "all" }] }; 
+    return { doctors: [], specialties: [{ label: "All Specialities", value: "all" }] };
   }
 }
+
+//get doctor by id
+export const getDoctorById = async (id) => {
+  if (!id) return null;
+  try {
+    const res = await fetch(`${process.env.SERVER_URL}/appointment/${id}`, {
+      cache: "no-store",
+    });
+    // if (!res.ok) {
+    //   // throw new Error(`Failed to fetch doctor: ${res.status}`);
+    // }
+    const doctor = await res.json();
+    return doctor; 
+
+  } catch (error) {
+    console.error("Error in getDoctorById:", error);
+    return null;
+  }
+};
+
+export const getRatedDoctors = async () => {
+  try {
+    const res = await fetch(`${process.env.SERVER_URL}/rated-doctor`, {
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch top rated doctors: ${res.status}`);
+    }
+
+    const topDoctors = await res.json();
+    return Array.isArray(topDoctors) ? topDoctors : (topDoctors.data || []);
+
+  } catch (error) {
+    console.error("Error in getRatedDoctors Action:", error);
+    return []; 
+  }
+};
