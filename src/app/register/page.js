@@ -15,39 +15,43 @@ import {
   FieldError
 } from "@heroui/react";
 import { authClient } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import { Mail, Lock, User, UserPlus } from "lucide-react";
 import { MdLinkedCamera } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
+import { redirect } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function RegisterPage() {
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  // const [loading, setLoading] = useState(false);
 
   const handleRegister = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+    const formData = new FormData(e.currentTarget)
+    const user = Object.fromEntries(formData.entries())
 
-    // Extracting fields natively via Form Anatomy standard data structures
-    const formData = new FormData(e.currentTarget);
-    const name = formData.get("name")?.toString() || "";
-    const email = formData.get("email")?.toString() || "";
-    const password = formData.get("password")?.toString() || "";
-
-    const { error } = await authClient.signUp.email({
-      email,
-      password,
-      name,
+    const { data, error } = await authClient.signUp.email({
+      email: user.email,
+      password: user.password,
+      name: user.name,
+      image: user.image,
     });
 
-    if (error) {
-      toast.error(error.message || "Failed to register");
-      setLoading(false);
-    } else {
-      toast.success("Account created successfully!");
-      router.push("/dashboard");
+    if (data) {
+      toast.success("You have successfully sign up", {
+      })
+      redirect('/');
     }
+    if (error) {
+      toast.warning(`Sign Up problem ${error}`)
+      return
+    }
+
+    
+  };
+
+  const signInGoogle = async () => {
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
   };
 
   return (
@@ -87,15 +91,15 @@ export default function RegisterPage() {
               <FieldError className="text-xs text-danger font-medium mt-1" />
             </TextField>
             <TextField
-              name="name"
+              name="image"
               type="url"
               className="w-full flex flex-col gap-1.5"
             >
               <Label className="font-bold text-foreground/90 text-sm">Image Url</Label>
               <div className="relative flex items-center">
                 <div className="absolute left-4 z-10 pointer-events-none text-default-400">
-                  
-                  <MdLinkedCamera size={18}/>
+
+                  <MdLinkedCamera size={18} />
                 </div>
                 <Input
                   placeholder="John Doe"
@@ -142,6 +146,12 @@ export default function RegisterPage() {
                 if (value.length < 8) {
                   return "Password must be at least 8 characters";
                 }
+                if (!/[A-Z]/.test(value)) {
+                  return "Password must contain at least one uppercase letter";
+                }
+                if (!/[0-9]/.test(value)) {
+                  return "Password must contain at least one number";
+                }
                 return null;
               }}
             >
@@ -162,7 +172,8 @@ export default function RegisterPage() {
               type="submit"
               color="primary"
               className="w-full h-14 font-bold hover:scale-[1.02] transition-transform shadow-xl shadow-primary/10"
-              isLoading={loading}
+              // isLoading={loading}
+              onClick={signInGoogle}
             >
               Sign Up
             </Button>

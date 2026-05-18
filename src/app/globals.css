@@ -1,10 +1,8 @@
 @import "tailwindcss";
 @import "@heroui/styles"; 
-
-
 @theme inline {
-  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -49,106 +47,223 @@
   --color-brand-foreground: var(--brand-foreground);
   --color-brand-soft: var(--brand-soft);
   --color-brand-deep: var(--brand-deep);
+  /* Medical-specific semantic tokens */
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
 }
 
+/* ═══════════════════════════════════════════════════════
+   LIGHT MODE — Clinical Serenity
+   Primary: Deep Medical Teal  |  Accent: Sage Green
+   Background: Warm Porcelain  |  Foreground: Deep Slate
+   ═══════════════════════════════════════════════════════ */
 :root {
   --radius: 0.75rem;
-  --background: oklch(0.99 0.005 230);
-  --foreground: oklch(0.20 0.04 240);
+
+  /* Surface */
+  --background: oklch(0.985 0.006 165);          /* warm porcelain white, hint of green */
+  --foreground: oklch(0.18 0.035 200);            /* deep slate-teal, not pure black */
+
+  /* Cards & Popovers */
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.20 0.04 240);
+  --card-foreground: oklch(0.18 0.035 200);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.20 0.04 240);
-  --primary: oklch(0.65 0.16 235);
+  --popover-foreground: oklch(0.18 0.035 200);
+
+  /* Primary — Medical Teal */
+  --primary: oklch(0.52 0.13 195);               /* confident teal — trust, calm, health */
   --primary-foreground: oklch(0.99 0 0);
-  --secondary: oklch(0.96 0.02 230);
-  --secondary-foreground: oklch(0.28 0.08 245);
-  --muted: oklch(0.97 0.012 230);
-  --muted-foreground: oklch(0.52 0.03 240);
-  --accent: oklch(0.93 0.05 230);
-  --accent-foreground: oklch(0.28 0.08 245);
-  --destructive: oklch(0.60 0.22 25);
+
+  /* Secondary — Soft Sage */
+  --secondary: oklch(0.94 0.03 165);             /* pale sage green surface */
+  --secondary-foreground: oklch(0.28 0.06 195);
+
+  /* Muted */
+  --muted: oklch(0.96 0.015 170);
+  --muted-foreground: oklch(0.50 0.03 195);
+
+  /* Accent — Seafoam */
+  --accent: oklch(0.90 0.055 175);               /* seafoam hover state */
+  --accent-foreground: oklch(0.24 0.07 195);
+
+  /* Destructive — Warm Coral (not aggressive red) */
+  --destructive: oklch(0.60 0.20 22);
   --destructive-foreground: oklch(0.99 0 0);
-  --border: oklch(0.92 0.02 230);
-  --input: oklch(0.94 0.018 230);
-  --ring: oklch(0.65 0.16 235);
-  --brand: oklch(0.65 0.16 235);
+
+  /* Borders & Inputs */
+  --border: oklch(0.90 0.022 175);
+  --input: oklch(0.93 0.018 170);
+  --ring: oklch(0.52 0.13 195);
+
+  /* Brand Identity — Medical Teal suite */
+  --brand: oklch(0.52 0.13 195);                 /* core teal */
   --brand-foreground: oklch(0.99 0 0);
-  --brand-soft: oklch(0.93 0.05 230);
-  --brand-deep: oklch(0.32 0.10 245);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
+  --brand-soft: oklch(0.90 0.055 175);            /* light seafoam wash */
+  --brand-deep: oklch(0.28 0.09 200);             /* deep ocean — for headings, emphasis */
+
+  /* Medical Semantic Colors */
+  --success: oklch(0.56 0.15 155);               /* confirmed / available */
+  --success-foreground: oklch(0.99 0 0);
+  --warning: oklch(0.72 0.16 75);                /* pending / rescheduled */
+  --warning-foreground: oklch(0.18 0.04 60);
+  --info: oklch(0.62 0.12 240);                  /* informational / upcoming */
+  --info-foreground: oklch(0.99 0 0);
+
+  /* Chart — Medical Dashboard Palette */
+  --chart-1: oklch(0.52 0.13 195);               /* primary teal */
+  --chart-2: oklch(0.56 0.15 155);               /* green (success) */
+  --chart-3: oklch(0.62 0.12 240);               /* blue (info) */
+  --chart-4: oklch(0.72 0.16 75);                /* amber (pending) */
+  --chart-5: oklch(0.60 0.20 22);                /* coral (urgent) */
+
+  /* Sidebar */
+  --sidebar: oklch(0.970 0.012 175);
+  --sidebar-foreground: oklch(0.18 0.035 200);
+  --sidebar-primary: oklch(0.52 0.13 195);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.90 0.055 175);
+  --sidebar-accent-foreground: oklch(0.24 0.07 195);
+  --sidebar-border: oklch(0.90 0.022 175);
+  --sidebar-ring: oklch(0.52 0.13 195);
 }
 
+/* ═══════════════════════════════════════════════════════
+   DARK MODE — Midnight Clinic
+   Deep navy-teal surfaces, bright teal accents
+   High contrast, eye-friendly for long sessions
+   ═══════════════════════════════════════════════════════ */
 .dark {
-  --background: oklch(0.18 0.03 245);
-  --foreground: oklch(0.96 0.01 230);
-  --card: oklch(0.22 0.04 245);
-  --card-foreground: oklch(0.96 0.01 230);
-  --popover: oklch(0.22 0.04 245);
-  --popover-foreground: oklch(0.96 0.01 230);
-  --primary: oklch(0.72 0.15 230);
-  --primary-foreground: oklch(0.15 0.04 245);
-  --secondary: oklch(0.28 0.05 245);
-  --secondary-foreground: oklch(0.96 0.01 230);
-  --muted: oklch(0.26 0.04 245);
-  --muted-foreground: oklch(0.72 0.03 230);
-  --accent: oklch(0.32 0.06 240);
-  --accent-foreground: oklch(0.96 0.01 230);
-  --destructive: oklch(0.65 0.22 25);
+  /* Surface */
+  --background: oklch(0.16 0.028 210);            /* deep navy-teal, premium & calm */
+  --foreground: oklch(0.94 0.012 185);            /* cool off-white */
+
+  /* Cards & Popovers */
+  --card: oklch(0.20 0.032 210);
+  --card-foreground: oklch(0.94 0.012 185);
+  --popover: oklch(0.22 0.034 208);
+  --popover-foreground: oklch(0.94 0.012 185);
+
+  /* Primary — Bright Teal */
+  --primary: oklch(0.70 0.14 188);               /* vivid teal — readable on dark */
+  --primary-foreground: oklch(0.12 0.03 210);
+
+  /* Secondary */
+  --secondary: oklch(0.26 0.042 205);
+  --secondary-foreground: oklch(0.92 0.012 185);
+
+  /* Muted */
+  --muted: oklch(0.24 0.036 208);
+  --muted-foreground: oklch(0.68 0.028 190);
+
+  /* Accent */
+  --accent: oklch(0.30 0.055 200);
+  --accent-foreground: oklch(0.94 0.012 185);
+
+  /* Destructive */
+  --destructive: oklch(0.65 0.22 22);
   --destructive-foreground: oklch(0.99 0 0);
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.72 0.15 230);
-  --brand: oklch(0.72 0.15 230);
-  --brand-foreground: oklch(0.15 0.04 245);
-  --brand-soft: oklch(0.30 0.06 240);
-  --brand-deep: oklch(0.92 0.04 230);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.208 0.042 265.755);
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
+
+  /* Borders & Inputs */
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.70 0.14 188);
+
+  /* Brand */
+  --brand: oklch(0.70 0.14 188);
+  --brand-foreground: oklch(0.12 0.03 210);
+  --brand-soft: oklch(0.28 0.055 200);
+  --brand-deep: oklch(0.90 0.05 185);
+
+  /* Medical Semantic Colors */
+  --success: oklch(0.62 0.16 155);
+  --success-foreground: oklch(0.12 0.03 170);
+  --warning: oklch(0.76 0.16 78);
+  --warning-foreground: oklch(0.14 0.04 70);
+  --info: oklch(0.68 0.12 235);
+  --info-foreground: oklch(0.12 0.03 240);
+
+  /* Chart */
+  --chart-1: oklch(0.70 0.14 188);               /* teal */
+  --chart-2: oklch(0.62 0.16 155);               /* green */
+  --chart-3: oklch(0.68 0.12 235);               /* blue */
+  --chart-4: oklch(0.76 0.16 78);                /* amber */
+  --chart-5: oklch(0.65 0.22 22);                /* coral */
+
+  /* Sidebar */
+  --sidebar: oklch(0.19 0.030 210);
+  --sidebar-foreground: oklch(0.94 0.012 185);
+  --sidebar-primary: oklch(0.70 0.14 188);
+  --sidebar-primary-foreground: oklch(0.12 0.03 210);
+  --sidebar-accent: oklch(0.28 0.048 205);
+  --sidebar-accent-foreground: oklch(0.94 0.012 185);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: oklch(0.70 0.14 188);
 }
 
+/* ═══════════════════════════════════════════════════════
+   BASE LAYER
+   ═══════════════════════════════════════════════════════ */
 @layer base {
   * {
     border-color: var(--color-border);
   }
-
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); letter-spacing: -0.01em; }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    color: var(--color-brand-deep);
+  }
 }
 
+/* ═══════════════════════════════════════════════════════
+   UTILITIES
+   ═══════════════════════════════════════════════════════ */
 @layer utilities {
+
+  /* Hero background — teal radial glow, medical gradient */
   .bg-hero-gradient {
     background-image:
-      radial-gradient(60% 80% at 80% 10%, color-mix(in oklab, var(--brand) 25%, transparent) 0%, transparent 60%),
-      radial-gradient(50% 60% at 10% 90%, color-mix(in oklab, var(--brand) 18%, transparent) 0%, transparent 60%),
-      linear-gradient(180deg, color-mix(in oklab, var(--brand-soft) 60%, var(--background)) 0%, var(--background) 100%);
+      radial-gradient(60% 80% at 75% 5%,  color-mix(in oklab, var(--brand) 22%, transparent) 0%, transparent 60%),
+      radial-gradient(50% 60% at 15% 95%, color-mix(in oklab, var(--success) 14%, transparent) 0%, transparent 60%),
+      linear-gradient(160deg, color-mix(in oklab, var(--brand-soft) 55%, var(--background)) 0%, var(--background) 100%);
+  }
+
+  /* Appointment status badges */
+  .bg-status-confirmed {
+    background-color: color-mix(in oklab, var(--success) 15%, transparent);
+    color: var(--success);
+    border: 1px solid color-mix(in oklab, var(--success) 30%, transparent);
+  }
+  .bg-status-pending {
+    background-color: color-mix(in oklab, var(--warning) 15%, transparent);
+    color: var(--warning);
+    border: 1px solid color-mix(in oklab, var(--warning) 30%, transparent);
+  }
+  .bg-status-cancelled {
+    background-color: color-mix(in oklab, var(--destructive) 12%, transparent);
+    color: var(--destructive);
+    border: 1px solid color-mix(in oklab, var(--destructive) 25%, transparent);
+  }
+  .bg-status-upcoming {
+    background-color: color-mix(in oklab, var(--info) 15%, transparent);
+    color: var(--info);
+    border: 1px solid color-mix(in oklab, var(--info) 30%, transparent);
+  }
+
+  /* Medical card glass effect */
+  .card-glass {
+    background: color-mix(in oklab, var(--card) 85%, transparent);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--color-border);
   }
 }

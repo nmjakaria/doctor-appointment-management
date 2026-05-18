@@ -1,12 +1,12 @@
 'use client';
 
 import { useState, Suspense } from "react";
-import { 
-  Card, 
-  CardHeader, 
-  CardFooter, 
-  Button, 
-  Link, 
+import {
+  Card,
+  CardHeader,
+  CardFooter,
+  Button,
+  Link,
   CardContent,
   Form,
   TextField,
@@ -15,51 +15,51 @@ import {
   FieldError
 } from "@heroui/react";
 import { authClient } from "@/lib/auth-client";
-import { useRouter, useSearchParams } from "next/navigation";
-import { toast } from "sonner";
 import { Mail, Lock, LogIn } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
+import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
 
 function LoginForm() {
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const callback = searchParams.get("callback") || "/dashboard";
+  // const searchParams = useSearchParams();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     const formData = new FormData(e.currentTarget);
-    const email = formData.get("email")?.toString() || "";
-    const password = formData.get("password")?.toString() || "";
+    const user = Object.fromEntries(formData.entries());
 
-    const { error } = await authClient.signIn.email({
-      email,
-      password,
+    const { data, error } = await authClient.signIn.email({
+      email: user.email,
+      password: user.password,
+      dontNavigate: true,
     });
-
     if (error) {
       toast.error(error.message || "Failed to login");
       setLoading(false);
     } else {
       toast.success("Welcome back!");
-      router.push(callback);
+      redirect('/')
     }
   };
 
   const handleSocialLogin = async (provider) => {
-    await authClient.signIn.social({
-      provider,
-      callbackURL: callback
-    });
+    try {
+      await authClient.signIn.social({
+        provider: "google",
+      });
+    } catch (err) {
+      toast.error("Google Sign-In failed. Try again.");
+    }
   };
 
   return (
     <div className="flex justify-center items-center py-20 px-4">
       {/* 💡 Changed border and background to use responsive tokens */}
       <Card className="w-full max-w-md p-8 rounded-[40px] border border-default-100 bg-content1 shadow-2xl relative overflow-hidden">
-        
+
         {/* 💡 Adjusted text/border colors to match theme dynamically */}
         <CardHeader className="flex flex-col gap-2 items-center text-center pb-8 border-b border-default-50">
           <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center shadow-lg shadow-primary/20 mb-2">
@@ -68,10 +68,10 @@ function LoginForm() {
           <h1 className="text-3xl font-extrabold text-foreground tracking-tight">Welcome Back</h1>
           <p className="text-muted-foreground font-medium">Access your clinical dashboard</p>
         </CardHeader>
-        
+
         <CardContent className="py-8 space-y-6">
           <Form className="space-y-6" onSubmit={handleLogin} validationBehavior="native">
-            
+
             {/* Email Field */}
             <TextField
               isRequired
@@ -91,8 +91,8 @@ function LoginForm() {
                   <Mail size={18} />
                 </div>
                 {/* 💡 Styled with semantic theme-aware tokens */}
-                <Input 
-                  placeholder="name@example.com" 
+                <Input
+                  placeholder="name@example.com"
                   className="h-14 w-full pl-11 pr-4 rounded-xl border border-default-200 bg-background text-foreground placeholder:text-default-400 outline-none focus-within:border-primary transition-colors text-sm"
                 />
               </div>
@@ -114,25 +114,25 @@ function LoginForm() {
                     <Lock size={18} />
                   </div>
                   {/* 💡 Styled with semantic theme-aware tokens */}
-                  <Input 
-                    placeholder="••••••••" 
+                  <Input
+                    placeholder="••••••••"
                     className="h-14 w-full pl-11 pr-4 rounded-xl border border-default-200 bg-background text-foreground placeholder:text-default-400 outline-none focus-within:border-primary transition-colors text-sm"
                   />
                 </div>
                 <FieldError className="text-xs text-danger font-medium mt-1" />
               </TextField>
-              
+
               <div className="flex justify-end">
                 <Link href="#" size="sm" className="text-primary font-extrabold hover:underline">
                   Forgot password?
                 </Link>
               </div>
             </div>
-            
+
             {/* 💡 Shifted button to adapt to light/dark themes natively */}
-            <Button 
-              type="submit" 
-              color="primary" 
+            <Button
+              type="submit"
+              color="primary"
               className="w-full h-14 font-bold hover:scale-[1.02] transition-transform shadow-xl shadow-primary/10"
               isLoading={loading}
             >
@@ -148,20 +148,20 @@ function LoginForm() {
           </div>
 
           <div className="flex items-center justify-center">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="rounded-xl border-default-200 font-bold text-foreground h-12 w-full"
               onPress={() => handleSocialLogin("google")}
             >
-              <FcGoogle/>
+              <FcGoogle />
               Log in with Google
             </Button>
           </div>
         </CardContent>
-        
+
         <CardFooter className="justify-center border-t border-default-50 pt-8">
           <p className="text-sm text-muted-foreground font-medium tracking-tight">
-            Don&apos;t have a clinical account? 
+            Don&apos;t have a clinical account?
             <Link href="/register" className="font-extrabold text-primary hover:underline ml-1">
               Register
             </Link>

@@ -1,12 +1,14 @@
 import { betterAuth } from "better-auth";
-import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { MongoClient } from "mongodb";
+import { mongodbAdapter } from "better-auth/adapters/mongodb";
 
 const client = new MongoClient(process.env.MONGODB_URI);
-const db = client.db();
+const db = client.db("doctor-appointment");
 
 export const auth = betterAuth({
-    database: mongodbAdapter(db),
+    database: mongodbAdapter(db, {
+        client
+    }),
     emailAndPassword: {
         enabled: true,
         async authorize({ email, password }) {
@@ -19,10 +21,6 @@ export const auth = betterAuth({
         google: {
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        },
-        github: {
-            clientId: process.env.GITHUB_CLIENT_ID,
-            clientSecret: process.env.GITHUB_CLIENT_SECRET,
         },
     },
     session: {

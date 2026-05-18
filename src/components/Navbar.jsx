@@ -5,6 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Stethoscope, Sun, Moon, LogOut, Menu, X } from "lucide-react";
 import { useTheme } from "next-themes";
+import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 // Centralized array configuration for all navigation items
 const NAV_LINKS = [
@@ -22,24 +24,37 @@ const NavLink = ({ href, label, onClick }) => {
     <Link
       href={href}
       onClick={onClick}
-      className={`text-sm font-medium transition-colors hover:text-primary ${
-        isActive ? "text-foreground" : "text-muted-foreground"
-      }`}
+      className={`text-sm font-medium transition-colors hover:text-primary ${isActive ? "text-foreground" : "text-muted-foreground"
+        }`}
     >
       {label}
     </Link>
   );
 };
 
-export default function Navbar({ 
-  user, 
-  loading, 
-  toggle, 
-  handleLogout 
+export default function Navbar({
+  loading,
+  toggle,
+
 }) {
   const [open, setOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
+
+  const handleSignOut = async () => {
+        await authClient.signOut({
+            fetchOptions: {
+                onSuccess: () => {
+                    toast.success('Logout successfully');
+                    window.location.href = '/';
+                },
+            },
+        });
+    };
+
+
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
@@ -61,37 +76,37 @@ export default function Navbar({
 
         {/* Desktop Auth & Theme Controls */}
         <div className="hidden items-center gap-2 md:flex">
-          <button 
+          <button
             className="inline-flex h-9 w-9 items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
             onClick={toggleTheme}
             aria-label="Toggle theme"
           >
             {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </button>
-          
+
           {!loading && !user && (
             <>
-              <Link 
-                href="/login" 
+              <Link
+                href="/login"
                 className="inline-flex h-9 items-center justify-center rounded-md px-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
               >
                 Login
               </Link>
-              <Link 
-                href="/register" 
+              <Link
+                href="/register"
                 className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90"
               >
                 Register
               </Link>
             </>
           )}
-          
+
           {user && (
             <div className="flex items-center gap-3">
               <Link href="/dashboard/profile" aria-label="Profile">
                 <div className="relative flex h-9 w-9 shrink-0 overflow-hidden rounded-full ring-2 ring-brand/30">
                   {user.photo ? (
-                    <img className="aspect-square h-full w-full" src={user.photo} alt={user.name || "User"} />
+                    <img className="aspect-square h-full w-full" src={user?.image} alt={user?.name || "User"} />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center rounded-full bg-muted text-sm font-medium">
                       {user.name ? user.name.slice(0, 1).toUpperCase() : "U"}
@@ -99,9 +114,9 @@ export default function Navbar({
                   )}
                 </div>
               </Link>
-              <button 
-                className="inline-flex h-9 items-center justify-center rounded-md border border-input bg-background px-3 text-xs font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground" 
-                onClick={handleLogout}
+              <button
+                className="inline-flex h-9 items-center justify-center rounded-md border border-input bg-background px-3 text-xs font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+                onClick={handleSignOut}
               >
                 <LogOut className="mr-2 h-4 w-4" /> Logout
               </button>
@@ -125,16 +140,16 @@ export default function Navbar({
           <div className="container mx-auto flex flex-col gap-3 px-4 py-4">
             {/* Mobile Navigation - Reusing the same array map */}
             {NAV_LINKS.map((link) => (
-              <NavLink 
-                key={link.href} 
-                href={link.href} 
-                label={link.label} 
-                onClick={() => setOpen(false)} 
+              <NavLink
+                key={link.href}
+                href={link.href}
+                label={link.label}
+                onClick={() => setOpen(false)}
               />
             ))}
-            
+
             <div className="flex items-center gap-2 pt-2 border-t border-border/40">
-              <button 
+              <button
                 className="inline-flex h-9 w-9 items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
                 onClick={toggle}
               >
@@ -142,15 +157,15 @@ export default function Navbar({
               </button>
               {!user ? (
                 <>
-                  <Link 
-                    href="/login" 
+                  <Link
+                    href="/login"
                     onClick={() => setOpen(false)}
                     className="inline-flex h-9 items-center justify-center rounded-md px-4 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
                   >
                     Login
                   </Link>
-                  <Link 
-                    href="/register" 
+                  <Link
+                    href="/register"
                     onClick={() => setOpen(false)}
                     className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90"
                   >
@@ -158,9 +173,9 @@ export default function Navbar({
                   </Link>
                 </>
               ) : (
-                <button 
-                  className="inline-flex h-9 items-center justify-center rounded-md border border-input bg-background px-3 text-xs font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground" 
-                  onClick={() => { handleLogout(); setOpen(false); }}
+                <button
+                  className="inline-flex h-9 items-center justify-center rounded-md border border-input bg-background px-3 text-xs font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+                  onClick={() => {handleSignOut() ; setOpen(false); }}
                 >
                   <LogOut className="mr-2 h-4 w-4" /> Logout
                 </button>
