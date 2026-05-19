@@ -1,5 +1,7 @@
 'use server';
 
+import { redirect } from "next/navigation";
+
 export async function getDoctors(query = "", specialty = "all") {
   try {
     const res = await fetch(`${process.env.SERVER_URL}/appointment`, {
@@ -117,4 +119,30 @@ export async function createBooking(appointmentData) {
   } catch (error) {
     return { success: false, error: error.message || "Something went wrong" };
   }
+}
+
+export async function updateAppointment(id, formData) {
+    const rawData = Object.fromEntries(formData.entries());
+    delete rawData._id; 
+
+    try {
+        const res = await fetch(`${process.env.SERVER_URL}/booking/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(rawData)
+        });
+
+        if (!res.ok) {
+            return { success: false, error: "Failed to update" };
+            // redirect("/dashboard");
+        }
+
+        const data = await res.json();
+        return { success: true, data };
+        
+    } catch (error) {
+        return { success: false, error: "Network error" };
+    }
 }

@@ -1,6 +1,7 @@
 import { Card, CardBody, Button, CardContent } from '@heroui/react';
 import { Trash2, Edit3, Calendar, Clock, Stethoscope, Hash, CreditCard, ExternalLink } from 'lucide-react';
 import React from 'react';
+import EditBookedAppointment from './EditBookedAppointment';
 
 const AppointmentBooked = async ({ bookings }) => {
     const appointments = bookings;
@@ -8,25 +9,32 @@ const AppointmentBooked = async ({ bookings }) => {
     return (
         <div className="space-y-4">
             {appointments.map((apt) => (
-                <Card key={apt._id} className="rounded-[24px] border border-slate-100 shadow-xl shadow-slate-100/30 bg-white overflow-hidden hover:border-slate-200/80 transition-all duration-200">
+                <Card key={apt._id} className="rounded-[24px] border border-slate-100 shadow-xl shadow-card/30 bg-card overflow-hidden hover:border-slate-200/80 transition-all duration-200">
                     <CardContent className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
 
                         <div className="flex items-start gap-4">
-                            <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center shrink-0 border border-blue-100">
+                            <div className="w-12 h-12 bg-primary text-primary-foreground rounded-2xl flex items-center justify-center shrink-0 border border-primary/20">
                                 <Stethoscope size={22} />
                             </div>
                             <div className="space-y-1.5">
                                 <div className="flex flex-wrap items-center gap-2">
-                                    <h3 className="text-base font-extrabold text-slate-800 leading-tight">{apt.
+                                    <h3 className="text-base font-extrabold text-foreground leading-tight">{apt.
                                         doctorName}</h3>
                                     <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 text-slate-600">
                                         {apt.type || "In-Person Consultation"}
                                     </span>
                                 </div>
                                 <p className="text-xs text-slate-400 font-semibold">{apt.specialty}</p>
-                                        <p className="text-xs text-slate-500 font-medium bg-slate-50 inline-block px-2.5 py-1 rounded-lg border border-slate-100">
+                                <h3 className="text-base font-extrabold text-foreground leading-tight">Patient: {apt.
+                                    patientName}
+                                </h3>
+                                <p className="text-sm text-foreground/70 font-medium">
+                                    {apt.phone}
+                                </p>
+                                <p className="text-xs text-foreground/70 font-medium bg-background-secondary inline-block px-2.5 py-1 rounded-lg border border-slate-100">
                                     📍 {apt.hospital}, {apt.location}
                                 </p>
+
                                 {/* Time & Metadata Badges */}
                                 <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 pt-2 text-xs text-slate-500 font-semibold border-t border-slate-50 mt-2">
                                     <span className="flex items-center gap-1 text-slate-600">
@@ -55,9 +63,7 @@ const AppointmentBooked = async ({ bookings }) => {
 
                             {/* Action Buttons */}
                             <div className="flex items-center gap-1.5">
-                                <Button isIconOnly size="sm" variant="flat" color="primary" className="rounded-xl w-9 h-9 bg-slate-50 hover:bg-blue-50 border border-slate-100 hover:border-blue-200 transition-all text-slate-600 hover:text-blue-600">
-                                    <Edit3 size={15} />
-                                </Button>
+                                <EditBookedAppointment appointment={apt} />
                                 <Button isIconOnly size="sm" variant="flat" color="danger" className="rounded-xl w-9 h-9 bg-slate-50 hover:bg-rose-50 border border-slate-100 hover:border-rose-200 transition-all text-slate-600 hover:text-rose-600">
                                     <Trash2 size={15} />
                                 </Button>

@@ -39,12 +39,12 @@ export default function DoctorCard({ doctor }) {
         </p>
 
         <div className="space-y-2 pt-1">
-          <div className="flex items-center gap-2.5 text-muted-foreground">
-            <MapPin size={16} className="text-default-400" />
+          <div className="flex items-center gap-2.5 text-foreground">
+            <MapPin size={16} className="text-foreground" />
             <span className="text-sm font-medium">{doctor.hospital}</span>
           </div>
-          <div className="flex items-center gap-2.5 text-muted-foreground">
-            <Clock size={16} className="text-default-400" />
+          <div className="flex items-center gap-2.5 text-foreground">
+            <Clock size={16} className="text-foreground" />
             <span className="text-sm font-medium">{doctor.experience} experience</span>
           </div>
         </div>

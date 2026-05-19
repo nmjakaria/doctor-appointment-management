@@ -30,13 +30,13 @@ export default async function DoctorDetailsPage({ params }) {
                     
                     <Card className="border-none bg-primary/5 p-4">
                         <CardContent className="grid grid-cols-2 gap-4">
-                            <div className="text-center p-4 bg-white rounded-2xl shadow-sm">
-                                <p className="text-2xl font-bold text-primary">{doctor.experience}+</p>
-                                <p className="text-tiny text-default-500 uppercase font-bold">Years Exp</p>
+                            <div className="text-center p-4 bg-background rounded-2xl shadow-sm">
+                                <p className="text-2xl font-bold text-foreground">{doctor.experience}+</p>
+                                <p className="text-tiny text-foreground uppercase font-bold">Years Exp</p>
                             </div>
-                            <div className="text-center p-4 bg-white rounded-2xl shadow-sm">
-                                <p className="text-2xl font-bold text-primary">{doctor.rating}</p>
-                                <p className="text-tiny text-default-500 uppercase font-bold">Rating</p>
+                            <div className="text-center p-4 bg-background rounded-2xl shadow-sm">
+                                <p className="text-2xl font-bold text-foreground">{doctor.rating}</p>
+                                <p className="text-tiny text-foreground uppercase font-bold">Rating</p>
                             </div>
                         </CardContent>
                     </Card>
@@ -50,11 +50,11 @@ export default async function DoctorDetailsPage({ params }) {
                         </Chip>
                         <h1 className="text-4xl md:text-5xl font-bold">{doctor.name}</h1>
                         <div className="flex items-center gap-6 flex-wrap">
-                            <div className="flex items-center gap-2 text-default-600">
+                            <div className="flex items-center gap-2 text-foreground">
                                 <Building size={18} className="text-primary" />
                                 <span className="font-medium">{doctor.hospital}</span>
                             </div>
-                            <div className="flex items-center gap-2 text-default-600">
+                            <div className="flex items-center gap-2 text-foreground">
                                 <MapPin size={18} className="text-primary" />
                                 <span className="font-medium">{doctor.location}</span>
                             </div>

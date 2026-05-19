@@ -13,7 +13,6 @@ const Dashboard = async () => {
   const user = session?.user;
   const res = await fetch(`${process.env.SERVER_URL}/booking/${user?.id}`);
   const bookings = await res.json();
-  console.log(bookings)
 
 
   const patientVitals = [

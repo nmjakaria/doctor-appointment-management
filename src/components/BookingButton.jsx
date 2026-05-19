@@ -103,13 +103,13 @@ export default function BookingButton({ doctor }) {
                     <div className="w-full flex flex-col gap-2">
                       <Label className="text-sm font-medium text-foreground pl-0.5">Patient Name</Label>
                       <div className="flex items-center relative">
-                        <User size={18} className="absolute left-4 text-default-foreground pointer-events-none z-10" />
+                        <User size={18} className="absolute left-4 text-foreground pointer-events-none z-10" />
                         <Input
                           placeholder="Enter full name"
                           value={patientName || ""}
                           onChange={(e) => setPatientName(e.target.value)}
                           required
-                          className="h-14 w-full rounded-xl border border-default-200 text-sm bg-background pl-11 pr-4 text-foreground placeholder:text-default-400 outline-none focus-within:border-primary transition-colors"
+                          className="h-14 w-full rounded-xl border border-default-200 text-sm bg-background pl-11 pr-4 text-foreground placeholder:text-foreground outline-none focus-within:border-primary transition-colors"
                         />
                       </div>
                     </div>
@@ -118,13 +118,13 @@ export default function BookingButton({ doctor }) {
                     <div className="w-full flex flex-col gap-2">
                       <Label className="text-sm font-medium text-foreground pl-0.5">Phone Number</Label>
                       <div className="flex items-center relative">
-                        <Phone size={18} className="absolute left-4 text-default-foreground pointer-events-none z-10" />
+                        <Phone size={18} className="absolute left-4 text-foreground pointer-events-none z-10" />
                         <Input
                           placeholder="+880 1234-0000"
                           value={phone}
                           onChange={(e) => setPhone(e.target.value)}
                           required
-                          className="h-14 w-full rounded-xl border border-default-200 bg-background pl-11 pr-4 text-sm text-foreground placeholder:text-default-400 outline-none focus-within:border-primary transition-colors"
+                          className="h-14 w-full rounded-xl border border-default-200 bg-background pl-11 pr-4 text-sm text-foreground placeholder:text-foreground outline-none focus-within:border-primary transition-colors"
                         />
                       </div>
                     </div>
