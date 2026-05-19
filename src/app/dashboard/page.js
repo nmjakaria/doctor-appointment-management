@@ -9,7 +9,6 @@ import {
 } from "@heroui/react";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import { 
   Calendar, Clock, User, FileText, 
   Settings, CreditCard, ChevronRight, Activity,
@@ -136,7 +135,7 @@ export default function DashboardPage() {
               }
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                <Card className="rounded-[32px] border-none shadow-xl shadow-slate-100 bg-white group hover:translate-y-[-4px] transition-all">
+                <Card className="rounded-[32px] border-none shadow-xl shadow-slate-100 bg-white group hover:-translate-y-1 transition-all">
                   <CardContent className="p-8 flex flex-row items-center gap-6">
                     <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                       <Calendar size={28} />
@@ -148,7 +147,7 @@ export default function DashboardPage() {
                     </div>
                   </CardContent>
                 </Card>
-                <Card className="rounded-[32px] border-none shadow-xl shadow-slate-100 bg-white group hover:translate-y-[-4px] transition-all">
+                <Card className="rounded-[32px] border-none shadow-xl shadow-slate-100 bg-white group hover:-translate-y-1 transition-all">
                   <CardContent className="p-8 flex flex-row items-center gap-6">
                     <div className="w-14 h-14 bg-purple-50 rounded-2xl flex items-center justify-center text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors">
                       <FileText size={28} />
