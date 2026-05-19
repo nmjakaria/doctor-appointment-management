@@ -48,7 +48,7 @@ export default function BookingButton({ doctor }) {
     };
 
     try {
-      const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000";
+      const serverUrl = process.env.SERVER_URL || "http://localhost:5000";
       
       const res = await fetch(`${serverUrl}/booking`, {
         method: "POST",
@@ -110,7 +110,7 @@ export default function BookingButton({ doctor }) {
                         <User size={18} className="absolute left-4 text-default-foreground pointer-events-none z-10" />
                         <Input
                           placeholder="Enter full name"
-                          value={patientName}
+                          value={patientName || ""}
                           onChange={(e) => setPatientName(e.target.value)}
                           required
                           className="h-14 w-full rounded-xl border border-default-200 text-sm bg-background pl-11 pr-4 text-foreground placeholder:text-default-400 outline-none focus-within:border-primary transition-colors"

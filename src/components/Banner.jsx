@@ -19,7 +19,7 @@ const sliderImages = [
 export default function Banner() {
   // 💡 Embla হুক কনফিগারেশন (৪ সেকেন্ড পর পর অটো-প্লে হবে এবং লুপ চলবে)
   const [emblaRef] = useEmblaCarousel(
-    { loop: true }, 
+    { loop: true },
     [Autoplay({ delay: 4000, stopOnInteraction: false })]
   );
 
@@ -52,16 +52,18 @@ export default function Banner() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
-            <Button
-              as={Link}
-              href="/appointments"
-              size="lg"
-              className="h-14 px-8 rounded-2xl font-black text-base bg-primary text-primary-foreground hover:bg-cyan-700 shadow-xl shadow-primary/20 group w-full sm:w-auto transition-all"
-              endContent={<ArrowUpRight size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
+            <Link
+            href="/appointments"
             >
-              Book Appointment
-            </Button>
-            
+              <Button
+                size="lg"
+                className="h-14 px-8 rounded-2xl font-black text-base bg-primary text-primary-foreground hover:bg-cyan-700 shadow-xl shadow-primary/20 group w-full sm:w-auto transition-all"
+                endContent={<ArrowUpRight size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
+              >
+                Book Appointment
+              </Button>
+            </Link>
+
             <Button
               as={Link}
               href="#how-it-works"
@@ -91,7 +93,7 @@ export default function Banner() {
         </div>
 
         <div className="flex-1 w-full max-w-md lg:max-w-none relative z-10 group">
-          
+
           <div className="overflow-hidden rounded-[32px] border-4 border-background shadow-2xl bg-muted" ref={emblaRef}>
 
             <div className="flex h-80 sm:h-100">
@@ -109,9 +111,9 @@ export default function Banner() {
               ))}
             </div>
           </div>
-          
+
           <div className="absolute inset-0 rounded-[32px] bg-linear-to-t from-black/20 via-transparent to-transparent pointer-events-none border-4 border-transparent" />
-          
+
           <div className="absolute -bottom-5 -left-5 bg-background border border-default-100 shadow-2xl rounded-2xl p-4 flex items-center gap-3 sm:flex animate-bounce-slow">
             <div className="w-10 h-10 bg-cyan-600/10 rounded-xl flex items-center justify-center text-cyan-600">
               <CheckCircle2 size={22} />

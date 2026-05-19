@@ -105,7 +105,7 @@ export default function Navbar({
             <div className="flex items-center gap-3">
               <Link href="/dashboard/profile" aria-label="Profile">
                 <div className="relative flex h-9 w-9 shrink-0 overflow-hidden rounded-full ring-2 ring-brand/30">
-                  {user.photo ? (
+                  {user.image ? (
                     <img className="aspect-square h-full w-full" src={user?.image} alt={user?.name || "User"} />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center rounded-full bg-muted text-sm font-medium">
