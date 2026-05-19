@@ -108,7 +108,6 @@ export default function BookingButton({ doctor }) {
                       <Label className="text-sm font-medium text-foreground pl-0.5">Patient Name</Label>
                       <div className="flex items-center relative">
                         <User size={18} className="absolute left-4 text-default-foreground pointer-events-none z-10" />
-                        {/* 💡 ২ নম্বর ফিক্স: ভ্যালু এবং অনচেঞ্জ সরাসরি ইনপুটে দেওয়া হয়েছে */}
                         <Input
                           placeholder="Enter full name"
                           value={patientName}
@@ -124,7 +123,6 @@ export default function BookingButton({ doctor }) {
                       <Label className="text-sm font-medium text-foreground pl-0.5">Phone Number</Label>
                       <div className="flex items-center relative">
                         <Phone size={18} className="absolute left-4 text-default-foreground pointer-events-none z-10" />
-                        {/* 💡 ২ নম্বর ফিক্স: ভ্যালু এবং অনচেঞ্জ সরাসরি ইনপুটে দেওয়া হয়েছে */}
                         <Input
                           placeholder="+880 1234-0000"
                           value={phone}
@@ -194,7 +192,7 @@ export default function BookingButton({ doctor }) {
                   {/* Available Timeslots */}
                   <div className="space-y-3 pt-2">
                     <p className="text-sm font-semibold text-foreground">Available Timeslots</p>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    <div className="grid grid-cols-2  gap-3">
                       {availability?.map((time) => {
                         const isCurrentSelected = selectedTime === time;
 
