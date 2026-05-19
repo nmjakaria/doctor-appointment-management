@@ -10,7 +10,7 @@ import { createBooking } from "@/lib/actions";
 export default function BookingButton({ doctor }) {
   const { data: session } = authClient.useSession();
   const user = session?.user;
-  const { _id, name, availability } = doctor;
+  const { _id, name, availability, specialty, hospital, location } = doctor;
 
   const [loading, setLoading] = useState(false);
   
@@ -44,6 +44,9 @@ export default function BookingButton({ doctor }) {
       gender: gender,
       doctorId: _id,
       doctorName: name,
+      specialty,
+      hospital,
+      location,
       appointmentDate: new Date(bookingDate),
       appointmentTime: selectedTime
     };

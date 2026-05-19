@@ -13,6 +13,7 @@ const Dashboard = async () => {
   const user = session?.user;
   const res = await fetch(`${process.env.SERVER_URL}/booking/${user?.id}`);
   const bookings = await res.json();
+  console.log(bookings)
 
 
   const patientVitals = [
@@ -22,7 +23,7 @@ const Dashboard = async () => {
   ];
 
   return (
-    <div className="container mx-auto py-10 space-y-10">
+    <div className="max-w-7xl mx-auto py-10 space-y-10">
 
       {/* Premium Welcome Header */}
       <div className="bg-card w-full rounded-2xl p-2 md:p-6 text-card-foreground shadow-xl relative overflow-hidden">
@@ -79,7 +80,7 @@ const Dashboard = async () => {
               <div className="space-y-3 pt-2 text-xs border-t border-slate-100">
                 <div className="flex justify-between items-center text-slate-500">
                   <span className="flex items-center gap-1.5"><UserIcon size={14} className="text-slate-400" /> Patient ID</span>
-                  <span className="font-mono font-bold text-slate-700">#EHR-99201</span>
+                  <span className="font-mono font-bold text-slate-700"> {user?.id || "001"} </span>
                 </div>
                 <div className="flex justify-between items-center text-slate-500">
                   <span className="flex items-center gap-1.5"><Heart size={14} className="text-rose-400" /> General Status</span>
@@ -90,7 +91,7 @@ const Dashboard = async () => {
 
             <CardFooter className="pb-6 pt-4 justify-center">
               <Button color="primary" variant="flat" className="font-bold w-full mx-4 rounded-xl h-11 border border-blue-100 bg-primary text-primary-foreground hover:bg-primary/70 transition-colors">
-                Update Profile & Vitals
+                Update Profile
               </Button>
             </CardFooter>
           </Card>
@@ -108,7 +109,7 @@ const Dashboard = async () => {
             </div>
           </div>
 
-          <AppointmentBooked />
+          <AppointmentBooked bookings={bookings} />
         </div>
 
       </div>
