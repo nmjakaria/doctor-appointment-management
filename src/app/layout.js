@@ -4,7 +4,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Providers } from "./provider";
 import { Toaster } from "react-hot-toast";
-import { ToastProvider } from "@heroui/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,18 +27,14 @@ export default function RootLayout({ children }) {
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-
-
       <body className="min-h-full flex flex-col">
         <Providers>
           <Navbar />
           {children}
           <Footer />
           <Toaster />
-          <ToastProvider />
         </Providers>
       </body>
-
     </html>
   );
 }
