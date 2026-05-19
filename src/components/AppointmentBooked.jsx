@@ -2,6 +2,7 @@ import { Card, CardBody, Button, CardContent } from '@heroui/react';
 import { Trash2, Edit3, Calendar, Clock, Stethoscope, Hash, CreditCard, ExternalLink } from 'lucide-react';
 import React from 'react';
 import EditBookedAppointment from './EditBookedAppointment';
+import DeleteBookedAppointment from './DeleteBookedAppointment';
 
 const AppointmentBooked = async ({ bookings }) => {
     const appointments = bookings;
@@ -64,9 +65,7 @@ const AppointmentBooked = async ({ bookings }) => {
                             {/* Action Buttons */}
                             <div className="flex items-center gap-1.5">
                                 <EditBookedAppointment appointment={apt} />
-                                <Button isIconOnly size="sm" variant="flat" color="danger" className="rounded-xl w-9 h-9 bg-slate-50 hover:bg-rose-50 border border-slate-100 hover:border-rose-200 transition-all text-slate-600 hover:text-rose-600">
-                                    <Trash2 size={15} />
-                                </Button>
+                                <DeleteBookedAppointment appointment={apt} />
                                 <Button size="sm" variant="solid" color="primary" className="rounded-xl font-bold h-9 ml-1 shadow-md shadow-blue-500/10" endContent={<ExternalLink size={12} />}>
                                     Slip
                                 </Button>

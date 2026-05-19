@@ -1,15 +1,13 @@
 "use client";
 import { useState } from "react";
-import { Button, Description, Input, Label, ListBox, Modal, Select, TimeField } from "@heroui/react";
+import { Button, Description, Input, Label, ListBox, Modal, Select } from "@heroui/react";
 import { Calendar, ChevronDown, Clock, Edit3, Phone, User, Users } from "lucide-react";
 import toast from "react-hot-toast";
 import { updateAppointment } from "@/lib/actions";
 
-
-const EditBookedAppointment = ({ appointment }) => {
+const EditBookedAppointment = ({ appointment, onAppointmentUpdated }) => {
     const { _id, doctorName: name, patientName: initialPatientName, phone: initialPhone, gender: initialGender, bookingDate: initialBookingDate, appointmentTime: initialAppointmentTime } = appointment;
-
-    // Initialize state hooks for form fields to handle user input dynamically
+    const [isOpen, setIsOpen] = useState(false);
     const [patientName, setPatientName] = useState(initialPatientName || "");
     const [phone, setPhone] = useState(initialPhone || "");
     const [gender, setGender] = useState(initialGender || "");
@@ -25,10 +23,12 @@ const EditBookedAppointment = ({ appointment }) => {
             const result = await updateAppointment(_id, formData);
 
             if (result.success) {
+                setIsOpen(false);
+
                 toast.success("Appointment Updated Successfully!", {
                     description: "The updated appointment details are now live.",
                 });
-                window.location.reload();
+                
             } else {
                 toast.error(result.error || "Failed to update appointment");
             }
@@ -39,15 +39,22 @@ const EditBookedAppointment = ({ appointment }) => {
 
     return (
         <div>
-            <Modal>
-                <Button isIconOnly size="sm" variant="flat" color="primary" className="rounded-xl w-9 h-9 bg-slate-50 hover:bg-blue-50 border border-slate-100 hover:border-blue-200 transition-all text-slate-600 hover:text-blue-600">
-                    <Edit3 size={15} />
-                </Button>
+            <Button 
+                isIconOnly 
+                size="sm" 
+                variant="flat" 
+                color="primary" 
+                className="rounded-xl w-9 h-9 bg-slate-50 hover:bg-blue-50 border border-slate-100 hover:border-blue-200 transition-all text-slate-600 hover:text-blue-600"
+                onClick={() => setIsOpen(true)}
+            >
+                <Edit3 size={15} />
+            </Button>
 
+            <Modal isOpen={isOpen} onOpenChange={setIsOpen}>
                 <Modal.Backdrop className="backdrop-blur-md bg-black/30">
                     <Modal.Container className="max-w-xl mx-auto my-8 p-4">
                         <Modal.Dialog>
-                            <Modal.CloseTrigger />
+                            <Modal.CloseTrigger onClick={() => setIsOpen(false)} />
 
                             <form onSubmit={onSubmit}>
                                 <Modal.Header className="p-6 pb-2 flex flex-col gap-1 border-b border-default-100">
@@ -101,7 +108,6 @@ const EditBookedAppointment = ({ appointment }) => {
                                                 defaultValue={gender}
                                                 className="w-full"
                                                 name="gender"
-                                                // If HeroUI Select supports direct state updates, handle it here:
                                                 onSelectionChange={(key) => setGender(key)}
                                             >
                                                 <Label className="text-sm font-medium text-foreground pl-0.5">Gender</Label>
@@ -168,7 +174,11 @@ const EditBookedAppointment = ({ appointment }) => {
                                 </Modal.Body>
 
                                 <Modal.Footer className="p-6 pt-4 border-t border-default-100 flex justify-end gap-3 bg-default-50/50">
-                                    <Button variant="danger" className="rounded-xl font-medium" slot="close">
+                                    <Button 
+                                        variant="danger" 
+                                        className="rounded-xl font-medium" 
+                                        onClick={() => setIsOpen(false)}
+                                    >
                                         Cancel
                                     </Button>
                                     <Button type="submit" className="rounded-xl bg-primary text-primary-foreground font-bold px-6">

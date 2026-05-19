@@ -1,6 +1,6 @@
 'use server';
 
-import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export async function getDoctors(query = "", specialty = "all") {
   try {
@@ -121,6 +121,7 @@ export async function createBooking(appointmentData) {
   }
 }
 
+//update booking
 export async function updateAppointment(id, formData) {
     const rawData = Object.fromEntries(formData.entries());
     delete rawData._id; 
@@ -136,11 +137,29 @@ export async function updateAppointment(id, formData) {
 
         if (!res.ok) {
             return { success: false, error: "Failed to update" };
-            // redirect("/dashboard");
         }
 
         const data = await res.json();
+        revalidatePath("/dashboard");
         return { success: true, data };
+        
+    } catch (error) {
+        return { success: false, error: "Network error" };
+    }
+}
+
+//delete booking
+export async function deleteAppointment(id) {
+    try {
+        const res = await fetch(`${process.env.SERVER_URL}/booking/${id}`, {
+            method: 'DELETE',
+        });
+
+        if (!res.ok) {
+            return { success: false, error: "Failed to delete" };
+        }
+        revalidatePath("/dashboard");
+        return { success: true };
         
     } catch (error) {
         return { success: false, error: "Network error" };
