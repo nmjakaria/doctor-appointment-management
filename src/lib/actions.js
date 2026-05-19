@@ -93,3 +93,28 @@ export const getRatedDoctors = async () => {
     return []; 
   }
 };
+
+//booking
+export async function createBooking(appointmentData) {
+  try {
+    const serverUrl = process.env.SERVER_URL;
+    
+    const res = await fetch(`${serverUrl}/booking`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(appointmentData)
+    });
+
+    if (!res.ok) {
+      return { success: false, error: "Failed to book appointment" };
+    }
+
+    const data = await res.json(); 
+    return { success: true, data };
+
+  } catch (error) {
+    return { success: false, error: error.message || "Something went wrong" };
+  }
+}

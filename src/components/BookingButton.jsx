@@ -5,6 +5,7 @@ import { authClient } from "@/lib/auth-client";
 import { Calendar, User, Phone, Users } from "lucide-react";
 import { Modal, Button, Input, Select, Label, ListBox, TextField } from "@heroui/react";
 import toast from "react-hot-toast";
+import { createBooking } from "@/lib/actions";
 
 export default function BookingButton({ doctor }) {
   const { data: session } = authClient.useSession();
@@ -48,17 +49,9 @@ export default function BookingButton({ doctor }) {
     };
 
     try {
-      const serverUrl = process.env.SERVER_URL || "http://localhost:5000";
-      
-      const res = await fetch(`${serverUrl}/booking`, {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(appointmentData)
-      });
+      const result = await createBooking(appointmentData);
 
-      if (res.ok) {
+      if (result.success) {
         toast.success(`Appointment booked successfully`);
         setPhone("");
         setBookingDate("");
