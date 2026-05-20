@@ -59,11 +59,14 @@ export async function getDoctors(query = "", specialty = "all") {
 }
 
 //get doctor by id
-export const getDoctorById = async (id) => {
+export const getDoctorById = async (id, token) => {
   if (!id) return null;
   try {
     const res = await fetch(`${process.env.SERVER_URL}/appointment/${id}`, {
       cache: "no-store",
+      headers: {
+        authorization: `Bearer ${token}`
+      }
     });
     // if (!res.ok) {
     //   // throw new Error(`Failed to fetch doctor: ${res.status}`);

@@ -5,10 +5,16 @@ import BookingButton from "@/components/BookingButton";
 import { getDoctorById } from "@/lib/actions";
 import Image from "next/image";
 import { Card, CardContent, Chip } from "@heroui/react";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 export default async function DoctorDetailsPage({ params }) {
     const { id } = await params;
-    const doctor = await getDoctorById(id);
+    //get token
+    const {token} = await auth.api.getToken({
+        headers: await headers()
+    })
+    const doctor = await getDoctorById(id, token);
 
     if (!doctor) {
         return notFound();
