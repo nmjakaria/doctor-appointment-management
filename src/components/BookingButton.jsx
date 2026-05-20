@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
-import { Calendar, User, Phone, Users } from "lucide-react";
+import { Calendar, User, Phone, Users, MessageCircle } from "lucide-react";
 import { Modal, Button, Input, Select, Label, ListBox } from "@heroui/react";
 import toast from "react-hot-toast";
 import { createBooking } from "@/lib/actions";
@@ -13,13 +13,15 @@ export default function BookingButton({ doctor }) {
   const { _id, name, availability, specialty, hospital, location } = doctor;
 
   const [loading, setLoading] = useState(false);
-
   const [isOpen, setIsOpen] = useState(false);
+  
+
   const [patientName, setPatientName] = useState(user?.name);
   const [phone, setPhone] = useState("");
   const [gender, setGender] = useState("Male");
   const [bookingDate, setBookingDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
+  const [reason, setReason] = useState("");
 
   const handleBooking = async (e) => {
     e.preventDefault();
@@ -51,7 +53,8 @@ export default function BookingButton({ doctor }) {
       hospital,
       location,
       appointmentDate: new Date(bookingDate),
-      appointmentTime: selectedTime
+      appointmentTime: selectedTime,
+      reason: reason
     };
 
     try {
@@ -62,6 +65,7 @@ export default function BookingButton({ doctor }) {
         setPhone("");
         setBookingDate("");
         setSelectedTime("");
+        setReason("");
         setIsOpen(false);
       } else {
         toast.error("Failed to book appointment");
@@ -221,6 +225,21 @@ export default function BookingButton({ doctor }) {
                           </label>
                         );
                       })}
+                    </div>
+                  </div>
+
+
+                  <div className="w-full flex flex-col gap-2">
+                    <Label className="text-sm font-medium text-foreground pl-0.5">Reason for Visit</Label>
+                    <div className="flex items-center relative">
+                      <MessageCircle size={18} className="absolute left-4 text-foreground pointer-events-none z-10" />
+                      <Input
+                        placeholder="Enter reason for visit"
+                        value={reason}
+                        onChange={(e) => setReason(e.target.value)}
+                        required
+                        className="h-14 w-full rounded-xl border border-default-200 text-sm bg-background pl-11 pr-4 text-foreground placeholder:text-foreground outline-none focus-within:border-primary transition-colors"
+                      />
                     </div>
                   </div>
                 </Modal.Body>

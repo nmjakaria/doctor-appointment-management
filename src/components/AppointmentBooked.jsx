@@ -1,5 +1,5 @@
 import { Card, CardBody, Button, CardContent } from '@heroui/react';
-import { Trash2, Edit3, Calendar, Clock, Stethoscope, Hash, CreditCard, ExternalLink } from 'lucide-react';
+import { Calendar, Clock, Stethoscope, ExternalLink, User, Phone, MapPin, MessageCircle } from 'lucide-react'; // MessageCircle আইকন আনা হয়েছে
 import React from 'react';
 import EditBookedAppointment from './EditBookedAppointment';
 import DeleteBookedAppointment from './DeleteBookedAppointment';
@@ -7,66 +7,90 @@ import DeleteBookedAppointment from './DeleteBookedAppointment';
 const AppointmentBooked = async ({ bookings }) => {
     const appointments = bookings;
 
-    return (
-        <div className="space-y-4">
-            {appointments.map((apt) => (
-                <Card key={apt._id} className="rounded-[24px] border border-slate-100 shadow-xl shadow-card/30 bg-card overflow-hidden hover:border-slate-200/80 transition-all duration-200">
-                    <CardContent className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
+    if (!appointments || appointments.length === 0) {
+        return (
+            <div className="text-center py-16 border-2 border-dashed border-default-200 rounded-[24px] p-6 bg-default-50/40">
+                <Stethoscope className="mx-auto text-default-300 mb-3 animate-pulse" size={40} />
+                <p className="text-default-500 font-bold text-sm">No active consultations found.</p>
+            </div>
+        );
+    }
 
-                        <div className="flex items-start gap-4">
-                            <div className="w-12 h-12 bg-primary text-primary-foreground rounded-2xl flex items-center justify-center shrink-0 border border-primary/20">
+    return (
+        <div className="space-y-5 animate-in fade-in slide-in-from-bottom-4 duration-300">
+            {appointments.map((apt) => (
+                <Card 
+                    key={apt._id} 
+                    className="rounded-[24px] border border-default-100 shadow-xl shadow-default-100/30 bg-card overflow-hidden hover:border-default-200 hover:shadow-2xl hover:shadow-default-200/40 transition-all duration-300"
+                >
+                    <CardContent className="p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+
+                        <div className="flex flex-col sm:flex-row items-start gap-4 flex-1">
+
+                            <div className="w-12 h-12 bg-primary/10 text-primary rounded-2xl flex items-center justify-center shrink-0 border border-primary/20 shadow-sm shadow-primary/5">
                                 <Stethoscope size={22} />
                             </div>
-                            <div className="space-y-1.5">
-                                <div className="flex flex-wrap items-center gap-2">
-                                    <h3 className="text-base font-extrabold text-foreground leading-tight">{apt.
-                                        doctorName}</h3>
-                                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 text-slate-600">
-                                        {apt.type || "In-Person Consultation"}
-                                    </span>
-                                </div>
-                                <p className="text-xs text-slate-400 font-semibold">{apt.specialty}</p>
-                                <h3 className="text-base font-extrabold text-foreground leading-tight">Patient: {apt.
-                                    patientName}
-                                </h3>
-                                <p className="text-sm text-foreground/70 font-medium">
-                                    {apt.phone}
-                                </p>
-                                <p className="text-xs text-foreground/70 font-medium bg-background-secondary inline-block px-2.5 py-1 rounded-lg border border-slate-100">
-                                    📍 {apt.hospital}, {apt.location}
-                                </p>
+                            
+                            <div className="space-y-3 w-full">
 
-                                {/* Time & Metadata Badges */}
-                                <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 pt-2 text-xs text-slate-500 font-semibold border-t border-slate-50 mt-2">
-                                    <span className="flex items-center gap-1 text-slate-600">
+                                <div className="space-y-1">
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        <h3 className="text-lg font-black text-foreground tracking-tight leading-none">
+                                            {apt.doctorName}
+                                        </h3>
+                                        <span className="text-[10px] font-black tracking-wider uppercase px-2 py-0.5 rounded-md bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-400 border border-primary-100/30">
+                                            {apt.type || "In-Person"}
+                                        </span>
+                                    </div>
+                                    <p className="text-xs text-default-400 font-bold tracking-wide">{apt.specialty}</p>
+                                </div>
+
+                                <div className="p-3 bg-default-50/60 rounded-xl border border-default-100/50 space-y-1.5 max-w-xl">
+                                    <div className="flex items-center gap-2 text-sm text-foreground/90 font-bold">
+                                        <User size={14} className="text-default-400 shrink-0" />
+                                        <span>Patient: <span className="text-foreground font-black">{apt.patientName}</span></span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-xs text-default-500 font-semibold">
+                                        <Phone size={13} className="text-default-400 shrink-0" />
+                                        <span>{apt.phone}</span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-xs text-default-500 font-semibold pt-0.5">
+                                        <MapPin size={13} className="text-rose-500 shrink-0" />
+                                        <span className="line-clamp-1">{apt.hospital}, {apt.location}</span>
+                                    </div>
+
+                                    {apt.reason && (
+                                        <div className="flex items-start gap-2 text-xs text-default-600 font-semibold pt-1 border-t border-default-200/40 mt-1.5">
+                                            <MessageCircle size={13} className="text-primary mt-0.5 shrink-0" />
+                                            <p className="line-clamp-2">
+                                                <span className="text-default-400 font-bold">Reason:</span> {apt.reason}
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-1 text-xs text-default-500 font-bold">
+                                    <span className="flex items-center gap-1.5 bg-default-100/80 px-2.5 py-1 rounded-lg border border-default-200/30 text-default-600">
                                         <Calendar size={13} className="text-blue-500" /> {apt.appointmentDate}
                                     </span>
-                                    <span className="flex items-center gap-1 text-slate-600">
-                                        <Clock size={13} className="text-blue-500" /> {apt.appointmentTime}
+                                    <span className="flex items-center gap-1.5 bg-default-100/80 px-2.5 py-1 rounded-lg border border-default-200/30 text-default-600">
+                                        <Clock size={13} className="text-success-500" /> {apt.appointmentTime}
                                     </span>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Right Side: Statuses & Actions */}
-                        <div className="flex md:flex-col items-center md:items-end justify-between md:justify-center gap-4 pt-4 md:pt-0 border-t md:border-t-0 border-slate-100 shrink-0">
-                            {/* Payment status badge */}
-                            {/* <div className="text-right">
-                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 hidden md:block">Payment</p>
-                                <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold border ${apt.paymentStatus === "Paid"
-                                        ? "bg-green-50 text-green-700 border-green-200"
-                                        : "bg-amber-50 text-amber-700 border-amber-200"
-                                    }`}>
-                                    <CreditCard size={12} />
-                                    {apt.paymentStatus}
-                                </span>
-                            </div> */}
-
-                            {/* Action Buttons */}
-                            <div className="flex items-center gap-1.5">
+                        <div className="flex sm:flex-row lg:flex-col items-center justify-end gap-2.5 pt-4 lg:pt-0 border-t lg:border-t-0 border-default-100 shrink-0 w-full lg:w-auto">
+                            <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
                                 <EditBookedAppointment appointment={apt} />
                                 <DeleteBookedAppointment appointment={apt} />
-                                <Button size="sm" variant="solid" color="primary" className="rounded-xl font-bold h-9 ml-1 shadow-md shadow-blue-500/10" endContent={<ExternalLink size={12} />}>
+                                <Button 
+                                    size="sm" 
+                                    variant="solid" 
+                                    color="primary" 
+                                    className="rounded-xl font-black text-xs h-9 px-4 shadow-md shadow-primary/20 transition-transform active:scale-95" 
+                                    endContent={<ExternalLink size={12} />}
+                                >
                                     Slip
                                 </Button>
                             </div>

@@ -1,25 +1,36 @@
 "use client";
 import { useState } from "react";
 import { Button, Description, Input, Label, ListBox, Modal, Select } from "@heroui/react";
-import { Calendar, ChevronDown, Clock, Edit3, Phone, User, Users } from "lucide-react";
+import { Calendar, ChevronDown, Clock, Edit3, Phone, User, Users, MessageCircle } from "lucide-react"; // MessageCircle আইকন যুক্ত করা হয়েছে
 import toast from "react-hot-toast";
 import { updateAppointment } from "@/lib/actions";
 import { authClient } from "@/lib/auth-client";
 
 const EditBookedAppointment = ({ appointment, onAppointmentUpdated }) => {
-    const { _id, doctorName: name, patientName: initialPatientName, phone: initialPhone, gender: initialGender, bookingDate: initialBookingDate, appointmentTime: initialAppointmentTime } = appointment;
+    const { 
+        _id, 
+        doctorName: name, 
+        patientName: initialPatientName, 
+        phone: initialPhone, 
+        gender: initialGender, 
+        bookingDate: initialBookingDate, 
+        appointmentTime: initialAppointmentTime,
+        reason: initialReason 
+    } = appointment;
+
     const [isOpen, setIsOpen] = useState(false);
     const [patientName, setPatientName] = useState(initialPatientName || "");
     const [phone, setPhone] = useState(initialPhone || "");
     const [gender, setGender] = useState(initialGender || "");
     const [bookingDate, setBookingDate] = useState(initialBookingDate || "");
     const [appointmentTime, setAppointmentTime] = useState(initialAppointmentTime || "");
+    const [reason, setReason] = useState(initialReason || "");
 
     const onSubmit = async (e) => {
         e.preventDefault();
         const form = e.currentTarget;
         const formData = new FormData(form);
-        const {data: tokenData} = await authClient.token();
+        const { data: tokenData } = await authClient.token();
         const token = tokenData?.token;
 
         try {
@@ -27,10 +38,11 @@ const EditBookedAppointment = ({ appointment, onAppointmentUpdated }) => {
 
             if (result.success) {
                 setIsOpen(false);
-
                 toast.success("Appointment Updated Successfully!", {
                     description: "The updated appointment details are now live.",
                 });
+                
+                if (onAppointmentUpdated) onAppointmentUpdated();
                 
             } else {
                 toast.error(result.error || "Failed to update appointment");
@@ -145,7 +157,6 @@ const EditBookedAppointment = ({ appointment, onAppointmentUpdated }) => {
                                             </Select>
                                         </div>
 
-                                        {/* Preferred Date Input */}
                                         <div className="w-full flex flex-col gap-2">
                                             <Label className="text-sm font-medium text-foreground pl-0.5">Preferred Date</Label>
                                             <div className="relative flex items-center">
@@ -163,7 +174,7 @@ const EditBookedAppointment = ({ appointment, onAppointmentUpdated }) => {
                                         </div>
                                     </div>
 
-                                    <div className="pt-4">
+                                    <div className="pt-2">
                                         <Label className="text-sm font-medium text-foreground pl-0.5">Appointment time</Label>
                                         <input type="text"
                                             name="appointmentTime"
@@ -173,6 +184,21 @@ const EditBookedAppointment = ({ appointment, onAppointmentUpdated }) => {
                                             className="h-14 w-full rounded-xl border border-default-200 bg-background pl-4 pr-4 text-sm text-foreground outline-none focus-within:border-primary transition-colors"
                                             required
                                         />
+                                    </div>
+
+                                    <div className="w-full flex flex-col gap-2">
+                                        <Label className="text-sm font-medium text-foreground pl-0.5">Reason for Visit</Label>
+                                        <div className="flex items-center relative">
+                                            <MessageCircle size={18} className="absolute left-4 text-foreground pointer-events-none z-10" />
+                                            <Input
+                                                name="reason"
+                                                placeholder="Enter reason for visit"
+                                                value={reason}
+                                                onChange={(e) => setReason(e.target.value)}
+                                                required
+                                                className="h-14 w-full rounded-xl border border-default-200 text-sm bg-background pl-11 pr-4 text-foreground placeholder:text-default-400 outline-none focus-within:border-primary transition-colors"
+                                            />
+                                        </div>
                                     </div>
                                 </Modal.Body>
 
@@ -185,7 +211,7 @@ const EditBookedAppointment = ({ appointment, onAppointmentUpdated }) => {
                                         Cancel
                                     </Button>
                                     <Button type="submit" className="rounded-xl bg-primary text-primary-foreground font-bold px-6">
-                                        Confirm Booking
+                                        Confirm Changes
                                     </Button>
                                 </Modal.Footer>
 
