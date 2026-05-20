@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import { Calendar, User, Phone, Users } from "lucide-react";
-import { Modal, Button, Input, Select, Label, ListBox, TextField } from "@heroui/react";
+import { Modal, Button, Input, Select, Label, ListBox } from "@heroui/react";
 import toast from "react-hot-toast";
 import { createBooking } from "@/lib/actions";
 
@@ -36,7 +36,7 @@ export default function BookingButton({ doctor }) {
 
     setLoading(true);
 
-    const {data: tokenData} = await authClient.token();
+    const { data: tokenData } = await authClient.token();
     const token = tokenData?.token;
 
     const appointmentData = {
@@ -75,22 +75,23 @@ export default function BookingButton({ doctor }) {
 
   return (
     <>
-      <Modal isOpen={isOpen} onOpenChange={setIsOpen}>
-        <Button
-          size="lg"
-          className="w-full md:w-auto bg-primary text-primary-foreground px-12 h-14 font-bold text-lg rounded-full shadow-lg shadow-primary/30"
-        >
-          Book Appointment
-        </Button>
+      <Button
+        size="lg"
+        onPress={() => setIsOpen(true)}
+        className="w-full md:w-auto bg-primary text-primary-foreground px-12 h-14 font-bold text-lg rounded-full shadow-lg shadow-primary/30"
+      >
+        Book Appointment
+      </Button>
 
+      <Modal isOpen={isOpen} onOpenChange={setIsOpen}>
         <Modal.Backdrop className="backdrop-blur-md bg-black/30">
-          <Modal.Container className="max-w-xl mx-auto my-8 p-4">
-            <Modal.Dialog>
+          <Modal.Container className="max-w-xl mx-auto p-4 flex items-center justify-center h-full">
+            <Modal.Dialog className="max-h-[90vh] md:max-h-[85vh] flex flex-col w-full bg-background rounded-2xl overflow-hidden">
               <Modal.CloseTrigger />
 
-              <form onSubmit={handleBooking}>
-
-                <Modal.Header className="p-6 pb-2 flex flex-col gap-1 border-b border-default-100">
+              <form onSubmit={handleBooking} className="flex flex-col max-h-[90vh] w-full overflow-hidden">
+                
+                <Modal.Header className="p-6 pb-2 flex flex-col gap-1 border-b border-default-100 shrink-0">
                   <Modal.Heading className="text-2xl font-bold text-foreground">
                     Book an Appointment
                   </Modal.Heading>
@@ -99,7 +100,7 @@ export default function BookingButton({ doctor }) {
                   </p>
                 </Modal.Header>
 
-                <Modal.Body className="p-6 gap-6 max-h-[70vh] overflow-y-auto">
+                <Modal.Body className="p-6 gap-6 overflow-y-auto grow max-h-[50vh] md:max-h-[55vh]">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
 
                     {/* Patient Name Input */}
@@ -191,7 +192,7 @@ export default function BookingButton({ doctor }) {
                   {/* Available Timeslots */}
                   <div className="space-y-3 pt-2">
                     <p className="text-sm font-semibold text-foreground">Available Timeslots</p>
-                    <div className="grid grid-cols-2  gap-3">
+                    <div className="grid grid-cols-2 gap-3">
                       {availability?.map((time) => {
                         const isCurrentSelected = selectedTime === time;
 
@@ -199,9 +200,9 @@ export default function BookingButton({ doctor }) {
                           <label
                             key={time}
                             className={`relative flex items-center justify-center h-11 rounded-xl text-sm font-medium border cursor-pointer select-none transition-all duration-200 ${isCurrentSelected
-                                ? "border-primary bg-primary text-primary-foreground shadow-sm font-bold"
-                                : "border-default-200 bg-background text-foreground hover:bg-default-50 hover:border-default-300"
-                              }`}
+                              ? "border-primary bg-primary text-primary-foreground shadow-sm font-bold"
+                              : "border-default-200 bg-background text-foreground hover:bg-default-50 hover:border-default-300"
+                            }`}
                           >
                             <input
                               type="radio"
@@ -224,8 +225,8 @@ export default function BookingButton({ doctor }) {
                   </div>
                 </Modal.Body>
 
-                <Modal.Footer className="p-6 pt-4 border-t border-default-100 flex justify-end gap-3 bg-default-50/50">
-                  <Button variant="danger" className="rounded-xl font-medium" slot="close">
+                <Modal.Footer className="p-6 pt-4 border-t border-default-100 flex justify-end gap-3 bg-default-50/50 shrink-0">
+                  <Button variant="danger" className="rounded-xl font-medium" onPress={() => setIsOpen(false)}>
                     Cancel
                   </Button>
                   <Button type="submit" isLoading={loading} className="rounded-xl bg-primary text-primary-foreground font-bold px-6">
