@@ -90,8 +90,8 @@ export default function RegisterPage() {
                 <Input
                   name="name"
                   type="text"
-                  placeholder="John Doe"
-                  className="h-14 w-full pl-11 pr-4 rounded-xl border border-default-200 bg-background text-foreground placeholder:text-default-400 outline-none focus-within:border-primary transition-colors text-sm"
+                  placeholder="Md Shahriar Alam"
+                  className="h-14 w-full pl-11 pr-4 rounded-xl border border-default-200 bg-background text-foreground placeholder:text-foreground/50 outline-none focus-within:border-primary transition-colors text-sm"
                 />
               </div>
               <FieldError className="text-xs text-danger font-medium mt-1" />
@@ -108,7 +108,7 @@ export default function RegisterPage() {
                   name="image"
                   type="url"
                   placeholder="https://example.com/avatar.jpg"
-                  className="h-14 w-full pl-11 pr-4 rounded-xl border border-default-200 bg-background text-foreground placeholder:text-default-400 outline-none focus-within:border-primary transition-colors text-sm"
+                  className="h-14 w-full pl-11 pr-4 rounded-xl border border-default-200 bg-background text-foreground placeholder:text-foreground/50 outline-none focus-within:border-primary transition-colors text-sm"
                 />
               </div>
               <FieldError className="text-xs text-danger font-medium mt-1" />
@@ -134,7 +134,7 @@ export default function RegisterPage() {
                   name="email"
                   type="email"
                   placeholder="name@example.com"
-                  className="h-14 w-full pl-11 pr-4 rounded-xl border border-default-200 bg-background text-foreground placeholder:text-default-400 outline-none focus-within:border-primary transition-colors text-sm"
+                  className="h-14 w-full pl-11 pr-4 rounded-xl border border-default-200 bg-background text-foreground placeholder:text-foreground/50 outline-none focus-within:border-primary transition-colors text-sm"
                 />
               </div>
               <FieldError className="text-xs text-danger font-medium mt-1" />
@@ -160,15 +160,14 @@ export default function RegisterPage() {
                   name="password"
                   type="password"
                   placeholder="••••••••"
-                  className="h-14 w-full pl-11 pr-4 rounded-xl border border-default-200 bg-background text-foreground placeholder:text-default-400 outline-none focus-within:border-primary transition-colors text-sm"
+                  className="h-14 w-full pl-11 pr-4 rounded-xl border border-default-200 bg-background text-foreground placeholder:text-foreground/50 outline-none focus-within:border-primary transition-colors text-sm"
                 />
               </div>
               <FieldError className="text-xs text-danger font-medium mt-1" />
             </TextField>
             <Button
               type="submit"
-              color="primary"
-              className="w-full h-14 font-bold hover:scale-[1.02] transition-transform shadow-xl shadow-primary/10"
+              className="w-full h-14 bg-primary text-primary-foreground font-bold hover:scale-[1.02] transition-transform shadow-xl shadow-primary/10"
               isLoading={loading}
             >
               Sign Up
@@ -177,15 +176,15 @@ export default function RegisterPage() {
 
           {/* Social Register Splitter */}
           <div className="relative flex items-center gap-4 py-2">
-            <div className="h-px bg-default-100 grow" />
-            <span className="text-xs text-default-400 font-bold uppercase tracking-wider">Join with</span>
-            <div className="h-px bg-default-100 grow" />
+            <div className="h-px bg-primary grow" />
+            <span className="text-xs text-foreground font-bold uppercase tracking-wider">Join with</span>
+            <div className="h-px bg-primary grow" />
           </div>
 
           <div className="flex justify-center">
             <Button
               variant="outline"
-              className="rounded-xl border-default-200 font-bold text-foreground h-12 w-full"
+              className="rounded-xl border-primary font-bold text-foreground h-12 w-full"
               onPress={signInGoogle}
             >
               <FcGoogle />

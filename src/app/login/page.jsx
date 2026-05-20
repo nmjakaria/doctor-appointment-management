@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, Suspense } from "react";
+import { useState, Suspense, useEffect } from "react";
 import {
   Card,
   CardHeader,
@@ -18,11 +18,29 @@ import { authClient } from "@/lib/auth-client";
 import { Mail, Lock, LogIn } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import toast from "react-hot-toast";
-import { redirect } from "next/navigation";
+import { redirect, usePathname, useRouter, useSearchParams } from "next/navigation";
 
 function LoginForm() {
   const [loading, setLoading] = useState(false);
-  // const searchParams = useSearchParams();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  useEffect(() => {
+    const message = searchParams.get('message');
+    
+    if (message) {
+        toast.error(`⚠️ ${message}`, {
+            id: "url-alert-toast",
+        });
+        const params = new URLSearchParams(searchParams.toString());
+        params.delete('message');
+        
+        const newUrl = params.toString() ? `${pathname}?${params.toString()}` : pathname;
+        router.replace(newUrl, { scroll: false });
+    }
+}, [searchParams, pathname, router]);
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -59,7 +77,6 @@ function LoginForm() {
     <div className="flex justify-center items-center py-20 px-4">
       {/* 💡 Changed border and background to use responsive tokens */}
       <Card className="w-full max-w-md p-8 rounded-[40px] border border-default-100 bg-content1 shadow-2xl relative overflow-hidden">
-
         {/* 💡 Adjusted text/border colors to match theme dynamically */}
         <CardHeader className="flex flex-col gap-2 items-center text-center pb-8 border-b border-default-50">
           <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center shadow-lg shadow-primary/20 mb-2">
@@ -93,7 +110,7 @@ function LoginForm() {
                 {/* 💡 Styled with semantic theme-aware tokens */}
                 <Input
                   placeholder="name@example.com"
-                  className="h-14 w-full pl-11 pr-4 rounded-xl border border-default-200 bg-background text-foreground placeholder:text-default-400 outline-none focus-within:border-primary transition-colors text-sm"
+                  className="h-14 w-full pl-11 pr-4 rounded-xl border border-default-200 bg-background text-foreground placeholder:text-foreground/50 outline-none focus-within:border-primary transition-colors text-sm"
                 />
               </div>
               <FieldError className="text-xs text-danger font-medium mt-1" />
@@ -116,7 +133,7 @@ function LoginForm() {
                   {/* 💡 Styled with semantic theme-aware tokens */}
                   <Input
                     placeholder="••••••••"
-                    className="h-14 w-full pl-11 pr-4 rounded-xl border border-default-200 bg-background text-foreground placeholder:text-default-400 outline-none focus-within:border-primary transition-colors text-sm"
+                    className="h-14 w-full pl-11 pr-4 rounded-xl border border-default-200 bg-background text-foreground placeholder:text-foreground/50 outline-none focus-within:border-primary transition-colors text-sm"
                   />
                 </div>
                 <FieldError className="text-xs text-danger font-medium mt-1" />
@@ -132,8 +149,7 @@ function LoginForm() {
             {/* 💡 Shifted button to adapt to light/dark themes natively */}
             <Button
               type="submit"
-              color="primary"
-              className="w-full h-14 font-bold hover:scale-[1.02] transition-transform shadow-xl shadow-primary/10"
+              className="w-full h-14 bg-primary text-primary-foreground font-bold hover:scale-[1.02] transition-transform shadow-xl shadow-primary/10"
               isLoading={loading}
             >
               Sign In
@@ -142,15 +158,15 @@ function LoginForm() {
 
           {/* 💡 Divider uses responsive system border color */}
           <div className="relative flex items-center gap-4 py-2">
-            <div className="h-px bg-default-100 flex-grow" />
-            <span className="text-xs text-default-400 font-bold uppercase tracking-wider">or continue with</span>
-            <div className="h-px bg-default-100 flex-grow" />
+            <div className="h-px bg-primary grow" />
+            <span className="text-xs text-foreground font-bold uppercase tracking-wider">or continue with</span>
+            <div className="h-px bg-primary grow" />
           </div>
 
           <div className="flex items-center justify-center">
             <Button
               variant="outline"
-              className="rounded-xl border-default-200 font-bold text-foreground h-12 w-full"
+              className="rounded-xl border-primary font-bold text-foreground h-12 w-full"
               onPress={() => handleSocialLogin("google")}
             >
               <FcGoogle />
