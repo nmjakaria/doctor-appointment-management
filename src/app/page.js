@@ -1,6 +1,7 @@
 import Banner from "@/components/Banner";
 import MedicalPartners from "@/components/MedicalPartners";
 import Specialties from "@/components/Specialties";
+import TestimonialsSection from "@/components/TestimonialsSection";
 import TopRatedDoctor from "@/components/TopRatedDoctor";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import Image from "next/image";
@@ -17,6 +18,7 @@ export default function Home() {
       <TopRatedDoctor />
       <Specialties />
       <WhyChooseUs />
+      <TestimonialsSection />
       <MedicalPartners />
     </div>
   );
