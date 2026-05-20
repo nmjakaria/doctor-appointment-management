@@ -2,7 +2,7 @@
 
 A modern, full-stack, and responsive Doctor Appointment Booking System built using Next.js for a robust client-side architecture and Node.js/Express.js powering the scalable server-side. The platform provides a seamless experience for searching medical specialists, managing reservations dynamically, updating profiles, and managing secure route access.
 
-**Live Application URL:** [Insert Live Link Here]  
+**Live Application URL:** [Live Link Here](https://doctor-appointment-management-coral.vercel.app)  
 **Client Repository:** [GitHub Client Link](https://github.com/nmjakaria/doctor-appointment-management)  
 **Server Repository:** [GitHub Server Link](https://github.com/nmjakaria/doctor-appointment-server)  
 
