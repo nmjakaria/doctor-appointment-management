@@ -57,15 +57,14 @@ Follow these steps to configure a local instance of the application:
 
 **docappoint-client**
 ```bash
-git clone [https://github.com/nmjakaria/doctor-appointment-management.git](https://github.com/nmjakaria/doctor-appointment-management.git) docappoint-client
+git clone https://github.com/nmjakaria/doctor-appointment-management.git
 
 ```
 
 **docappoint-server**
 
 ```bash
-git clone [https://github.com/nmjakaria/doctor-appointment-server.git](https://github.com/nmjakaria/doctor-appointment-server.git) docappoint-server
-
+git clone https://github.com/nmjakaria/doctor-appointment-server.git
 ```
 
 ### 2. Client Setup
