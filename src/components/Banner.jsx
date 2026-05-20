@@ -10,10 +10,11 @@ import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 
 const sliderImages = [
-  "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=1400&q=80",
-  "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?auto=format&fit=crop&w=1400&q=80",
+  "https://images.unsplash.com/photo-1734094546615-045bf5f7ea0e?auto=format&fit=crop&w=1400&q=80",
+  "https://plus.unsplash.com/premium_photo-1675686363477-c28d5bf65adb?auto=format&fit=crop&w=1400&q=80",
   "https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&w=1400&q=80",
-  "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1400&q=80"
+  "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1400&q=80",
+  "https://plus.unsplash.com/premium_photo-1661775601929-8c775187bea6?auto=format&fit=crop&w=1400&q=80",
 ];
 
 export default function Banner() {

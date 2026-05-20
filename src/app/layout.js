@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Providers } from "./provider";
 import { Toaster } from "react-hot-toast";
+import ReactLenis from "lenis/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +31,9 @@ export default function RootLayout({ children }) {
       <body className="min-h-full flex flex-col">
         <Providers>
           <Navbar />
-          {children}
+          <ReactLenis root options={{ duration: 1.5, lerp: 0.05 }}>
+            {children}
+          </ReactLenis>
           <Footer />
           <Toaster />
         </Providers>
