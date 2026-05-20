@@ -5,6 +5,7 @@ import { Card, CardHeader, CardBody, CardFooter, Button, CardContent } from '@he
 import { headers } from 'next/headers';
 import Image from 'next/image';
 import { Activity, ShieldCheck, Heart, User as UserIcon } from 'lucide-react';
+import UpdateUserProfile from '@/components/UpdateUserProfile';
 
 const Dashboard = async () => {
   const session = await auth.api.getSession({
@@ -89,9 +90,7 @@ const Dashboard = async () => {
             </CardContent>
 
             <CardFooter className="pb-6 pt-4 justify-center">
-              <Button color="primary" variant="flat" className="font-bold w-full mx-4 rounded-xl h-11 border border-blue-100 bg-primary text-primary-foreground hover:bg-primary/70 transition-colors">
-                Update Profile
-              </Button>
+              <UpdateUserProfile />
             </CardFooter>
           </Card>
         </div>

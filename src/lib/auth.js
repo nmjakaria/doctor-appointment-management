@@ -1,3 +1,4 @@
+
 import { betterAuth } from "better-auth";
 import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
@@ -15,7 +16,25 @@ export const auth = betterAuth({
             // Manual check can be done here if needed, 
             // but Better Auth handles standard verification.
             return null; // Let internal logic handle it
-        }
+        },
+    },
+    user: {
+        changeEmail: {
+            enabled: true,
+        },
+        deleteUser: {
+            enabled: true,
+        },
+        additionalFields: {
+            name: {
+                type: "string",
+                required: false,
+            },
+            image: {
+                type: "string",
+                required: false,
+            },
+        },
     },
     socialProviders: {
         google: {
