@@ -4,7 +4,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Stethoscope, Sun, Moon, LogOut, Menu, X } from "lucide-react";
+import { Stethoscope, Sun, Moon, LogOut, Menu, X, User as UserIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { authClient } from "@/lib/auth-client";
 import toast from "react-hot-toast";
@@ -37,7 +37,6 @@ const NavLink = ({ href, label, onClick }) => {
 export default function Navbar({
   loading,
   toggle,
-
 }) {
   const [open, setOpen] = useState(false);
   const { theme, setTheme } = useTheme();
@@ -56,34 +55,30 @@ export default function Navbar({
     });
   };
 
-
-
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
           <div className="grid h-10 w-10 place-items-center rounded-lg bg-brand text-brand-foreground">
-            {/* <Stethoscope className="h-5 w-5" /> */}
-            {
-              theme === "dark" ?
-                <Image alt="log"
-                  src="/doctor-appoint-logo-dark.png"
-                  width={35}
-                  height={35}
-                />
-                :
-                <Image alt="log"
-                  src="/doctor-appoint-light-logo.png"
-                  width={35}
-                  height={35}
-                />
-            }
+            {theme === "dark" ? (
+              <Image alt="log"
+                src="/doctor-appoint-logo-dark.png"
+                width={35}
+                height={35}
+              />
+            ) : (
+              <Image alt="log"
+                src="/doctor-appoint-light-logo.png"
+                width={35}
+                height={35}
+              />
+            )}
           </div>
           <span className="font-display text-lg font-bold tracking-tight">DocAppoint</span>
         </Link>
 
-        {/* Desktop Navigation - Cleanly mapping over our array */}
+        {/* Desktop Navigation */}
         <nav className="hidden items-center gap-7 md:flex">
           {NAV_LINKS.map((link) => (
             <NavLink key={link.href} href={link.href} label={link.label} />
@@ -119,7 +114,7 @@ export default function Navbar({
 
           {user && (
             <div className="flex items-center gap-3">
-              <Link href="/dashboard/profile" aria-label="Profile">
+              <Link href="/dashboard/my-profile" aria-label="Profile">
                 <div className="relative flex h-9 w-9 shrink-0 overflow-hidden rounded-full ring-2 ring-brand/30">
                   {user.image ? (
                     <img className="aspect-square h-full w-full" src={user?.image} alt={user?.name || "User"} />
@@ -152,27 +147,55 @@ export default function Navbar({
 
       {/* Mobile Dropdown Navigation */}
       {open && (
-        <div className="border-t border-border/60 bg-background md:hidden">
-          <div className="container mx-auto flex flex-col gap-3 px-4 py-4">
-            {/* Mobile Navigation - Reusing the same array map */}
-            {NAV_LINKS.map((link) => (
-              <NavLink
-                key={link.href}
-                href={link.href}
-                label={link.label}
-                onClick={() => setOpen(false)}
-              />
-            ))}
+        <div className="border-t border-border/60 bg-background md:hidden animate-in fade-in slide-in-from-top-2 duration-200">
+          <div className="container mx-auto flex flex-col gap-4 px-4 py-4">
 
-            <div className="flex items-center gap-2 pt-2 border-t border-border/40">
+            {user && (
+              <Link 
+                href="/dashboard/my-profile" 
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-3 p-2 rounded-xl bg-muted/40 hover:bg-muted/70 transition-colors"
+              >
+                <div className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full ring-2 ring-brand/20">
+                  {user.image ? (
+                    <img className="aspect-square h-full w-full" src={user?.image} alt={user?.name || "User"} />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center rounded-full bg-muted text-sm font-bold">
+                      {user.name ? user.name.slice(0, 1).toUpperCase() : "U"}
+                    </div>
+                  )}
+                </div>
+                <div className="flex flex-col min-w-0">
+                  <span className="text-sm font-bold text-foreground truncate">{user.name}</span>
+                  <span className="text-xs text-muted-foreground truncate">{user.email}</span>
+                </div>
+              </Link>
+            )}
+
+            {/* Mobile Navigation Links */}
+            <div className="flex flex-col gap-3 pl-2">
+              {NAV_LINKS.map((link) => (
+                <NavLink
+                  key={link.href}
+                  href={link.href}
+                  label={link.label}
+                  onClick={() => setOpen(false)}
+                />
+              ))}
+            </div>
+
+            {/* Mobile Controls Layer */}
+            <div className="flex items-center justify-between pt-3 border-t border-border/40">
               <button
                 className="inline-flex h-9 w-9 items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
                 onClick={toggleTheme}
+                aria-label="Toggle theme"
               >
                 {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
               </button>
+              
               {!user ? (
-                <>
+                <div className="flex items-center gap-2">
                   <Link
                     href="/login"
                     onClick={() => setOpen(false)}
@@ -187,10 +210,10 @@ export default function Navbar({
                   >
                     Register
                   </Link>
-                </>
+                </div>
               ) : (
                 <button
-                  className="inline-flex h-9 items-center justify-center rounded-md border border-input bg-background px-3 text-xs font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+                  className="inline-flex h-9 items-center justify-center rounded-md border border-input bg-background px-3 text-xs font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground text-destructive hover:text-destructive-foreground hover:bg-destructive/10"
                   onClick={() => { handleSignOut(); setOpen(false); }}
                 >
                   <LogOut className="mr-2 h-4 w-4" /> Logout
