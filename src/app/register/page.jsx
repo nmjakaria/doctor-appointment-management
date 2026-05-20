@@ -20,10 +20,13 @@ import { MdLinkedCamera } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 
 export default function RegisterPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -44,7 +47,7 @@ export default function RegisterPage() {
         toast.success("You have successfully signed up!");
         router.push('/login');
       }
-      
+
       if (error) {
         toast.error(`Sign Up problem: ${error.message || error}`);
       }
@@ -67,7 +70,7 @@ export default function RegisterPage() {
 
   return (
     <div className="flex justify-center items-center py-20 px-4">
-      <Card className="w-full max-w-md p-8 rounded-[40px] border border-default-100 shadow-2xl relative overflow-hidden">
+      <Card className="w-full max-w-lg p-8 rounded-[40px] border border-default-100 shadow-2xl relative overflow-hidden">
 
         <CardHeader className="flex flex-col gap-2 items-center text-center pb-8 border-b border-default-50">
           <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center shadow-lg shadow-primary/20 mb-2">
@@ -158,10 +161,17 @@ export default function RegisterPage() {
                 </div>
                 <Input
                   name="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
                   className="h-14 w-full pl-11 pr-4 rounded-xl border border-default-200 bg-background text-foreground placeholder:text-foreground/50 outline-none focus-within:border-primary transition-colors text-sm"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                >
+                  {showPassword ? <IoMdEyeOff size={30} /> : <IoMdEye size={30} />}
+                </button>
               </div>
               <FieldError className="text-xs text-danger font-medium mt-1" />
             </TextField>

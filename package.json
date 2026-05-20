@@ -12,6 +12,7 @@
     "@better-auth/mongo-adapter": "^1.6.11",
     "@heroui/react": "^3.0.5",
     "@heroui/styles": "^3.0.5",
+    "@react-icons/all-files": "^4.1.0",
     "better-auth": "^1.6.11",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",

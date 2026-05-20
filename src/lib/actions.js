@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 
 export async function getDoctors(query = "", specialty = "all") {
   try {
-    const res = await fetch(`${process.env.SERVER_URL}/appointment`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/appointment`, {
       cache: "no-store",
     });
 
@@ -62,7 +62,7 @@ export async function getDoctors(query = "", specialty = "all") {
 export const getDoctorById = async (id, token) => {
   if (!id) return null;
   try {
-    const res = await fetch(`${process.env.SERVER_URL}/appointment/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/appointment/${id}`, {
       cache: "no-store",
       headers: {
         authorization: `Bearer ${token}`
@@ -82,7 +82,7 @@ export const getDoctorById = async (id, token) => {
 //rated doctor for showing homepage
 export const getRatedDoctors = async () => {
   try {
-    const res = await fetch(`${process.env.SERVER_URL}/rated-doctor`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/rated-doctor`, {
       cache: "no-store",
     });
 
@@ -102,7 +102,7 @@ export const getRatedDoctors = async () => {
 //booking
 export async function createBooking(appointmentData, token) {
   try {
-    const serverUrl = process.env.SERVER_URL;
+    const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
     
     const res = await fetch(`${serverUrl}/booking`, {
       method: "POST",
@@ -131,7 +131,7 @@ export async function updateAppointment(id, formData, token) {
     delete rawData._id; 
 
     try {
-        const res = await fetch(`${process.env.SERVER_URL}/booking/${id}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/booking/${id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -156,7 +156,7 @@ export async function updateAppointment(id, formData, token) {
 //delete booking
 export async function deleteAppointment(id, token) {
     try {
-        const res = await fetch(`${process.env.SERVER_URL}/booking/${id}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/booking/${id}`, {
             method: 'DELETE',
             headers:{
               authorization: `Bearer ${token}`

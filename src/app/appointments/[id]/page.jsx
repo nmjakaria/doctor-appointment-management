@@ -40,7 +40,7 @@ export default async function DoctorDetailsPage({ params }) {
     const doctor = await getDoctorById(id, token);
 
     if (!doctor) {
-        return notFound();
+        throw new Error("We couldn't retrieve the doctor's details. The profile might be hidden, deleted, or the link is invalid.");
     }
 
     return (

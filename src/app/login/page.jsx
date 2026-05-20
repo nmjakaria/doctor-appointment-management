@@ -19,27 +19,29 @@ import { Mail, Lock, LogIn } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import toast from "react-hot-toast";
 import { redirect, usePathname, useRouter, useSearchParams } from "next/navigation";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 
 function LoginForm() {
   const [loading, setLoading] = useState(false);
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     const message = searchParams.get('message');
-    
+
     if (message) {
-        toast.error(`⚠️ ${message}`, {
-            id: "url-alert-toast",
-        });
-        const params = new URLSearchParams(searchParams.toString());
-        params.delete('message');
-        
-        const newUrl = params.toString() ? `${pathname}?${params.toString()}` : pathname;
-        router.replace(newUrl, { scroll: false });
+      toast.error(`⚠️ ${message}`, {
+        id: "url-alert-toast",
+      });
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete('message');
+
+      const newUrl = params.toString() ? `${pathname}?${params.toString()}` : pathname;
+      router.replace(newUrl, { scroll: false });
     }
-}, [searchParams, pathname, router]);
+  }, [searchParams, pathname, router]);
 
 
   const handleLogin = async (e) => {
@@ -76,7 +78,7 @@ function LoginForm() {
   return (
     <div className="flex justify-center items-center py-20 px-4">
       {/* 💡 Changed border and background to use responsive tokens */}
-      <Card className="w-full max-w-md p-8 rounded-[40px] border border-default-100 bg-content1 shadow-2xl relative overflow-hidden">
+      <Card className="w-full max-w-lg p-8 rounded-[40px] border border-default-100 bg-content1 shadow-2xl relative overflow-hidden">
         {/* 💡 Adjusted text/border colors to match theme dynamically */}
         <CardHeader className="flex flex-col gap-2 items-center text-center pb-8 border-b border-default-50">
           <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center shadow-lg shadow-primary/20 mb-2">
@@ -121,7 +123,7 @@ function LoginForm() {
               <TextField
                 isRequired
                 name="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 className="w-full flex flex-col gap-1.5"
                 minLength={8}
               >
@@ -135,6 +137,13 @@ function LoginForm() {
                     placeholder="••••••••"
                     className="h-14 w-full pl-11 pr-4 rounded-xl border border-default-200 bg-background text-foreground placeholder:text-foreground/50 outline-none focus-within:border-primary transition-colors text-sm"
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  >
+                    {showPassword ? <IoMdEyeOff size={30} /> : <IoMdEye size={30} />}
+                  </button>
                 </div>
                 <FieldError className="text-xs text-danger font-medium mt-1" />
               </TextField>
