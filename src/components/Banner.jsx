@@ -51,7 +51,7 @@ export default function Banner() {
         <div className="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-80 h-80 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="space-y-6 text-center lg:text-left z-10 max-w-2xl mt-auto lg:mt-0">
+        <div className=" space-y-6 text-center lg:text-left z-10 max-w-2xl mt-auto lg:mt-0">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-cyan-400/20 rounded-full border border-cyan-400/30 w-fit backdrop-blur-md mx-auto lg:mx-0">
             <CheckCircle2 size={14} className="text-cyan-400" />
             <span className="text-xs font-bold uppercase tracking-wider text-cyan-300">

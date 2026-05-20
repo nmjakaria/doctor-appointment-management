@@ -27,18 +27,18 @@ const MedicalPartners = () => {
       {/* Marquee Component Configuration */}
       <Marquee 
         gradient={true} 
-        gradientColor="var(--marquee-gradient, #f9fafb)"
-        speed={40} 
+        gradientColor="var(--marquee-gradient)"
+        speed={50} 
         pauseOnHover={true}
         direction="left"
       >
         {partners.map((partner) => (
           <div 
             key={partner.id} 
-            className="flex items-center justify-center bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-xl shadow-sm px-6 py-4 mx-4 min-w-35 h-35 transition-transform duration-300 hover:scale-105"
+            className="flex items-center justify-center bg-background border border-accent-soft-foreground rounded-xl shadow-sm px-6 py-4 mx-4 min-w-35 h-35 transition-transform duration-300 hover:scale-105"
           >
             <div className="flex flex-col items-center gap-3">
-              <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-blue-100 dark:border-gray-600 bg-gray-50 flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-blue-100  bg-gray-50 flex items-center justify-center">
                 <img 
                   src={partner.logo} 
                   alt={`${partner.name} Logo`}

@@ -12,7 +12,15 @@ const Dashboard = async () => {
     headers: await headers()
   });
   const user = session?.user;
-  const res = await fetch(`${process.env.SERVER_URL}/booking/${user?.id}`);
+  const {token} = await auth.api.getToken({
+    headers: await headers()
+  });
+
+  const res = await fetch(`${process.env.SERVER_URL}/booking/${user?.id}`,{
+    headers:{
+      authorization: `Bearer ${token}`
+    }
+  });
   const bookings = await res.json();
 
 
@@ -23,7 +31,7 @@ const Dashboard = async () => {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto py-10 space-y-10">
+    <div className="container mx-auto py-10 space-y-10">
 
       {/* Premium Welcome Header */}
       <div className="bg-card w-full rounded-2xl p-2 md:p-6 text-card-foreground shadow-xl relative overflow-hidden">

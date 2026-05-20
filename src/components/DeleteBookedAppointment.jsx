@@ -1,5 +1,6 @@
 "use client";
 import { deleteAppointment } from '@/lib/actions';
+import { authClient } from '@/lib/auth-client';
 import { AlertDialog, Button } from '@heroui/react';
 import { Trash2 } from 'lucide-react';
 import { redirect } from 'next/navigation';
@@ -10,8 +11,11 @@ import toast from 'react-hot-toast';
 const DeleteBookedAppointment = ({appointment}) => {
     const { _id } = appointment;
     const hendleDeleteDestination = async () => {
+        const {data: tokenData} = await authClient.token();
+        const token = tokenData?.token;
+
         try {
-            await deleteAppointment(_id);
+            await deleteAppointment(_id, token);
             toast.success("Appointment deleted successfully");
         }
         catch (error) {

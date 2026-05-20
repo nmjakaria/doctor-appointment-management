@@ -4,6 +4,7 @@ import { Button, Description, Input, Label, ListBox, Modal, Select } from "@hero
 import { Calendar, ChevronDown, Clock, Edit3, Phone, User, Users } from "lucide-react";
 import toast from "react-hot-toast";
 import { updateAppointment } from "@/lib/actions";
+import { authClient } from "@/lib/auth-client";
 
 const EditBookedAppointment = ({ appointment, onAppointmentUpdated }) => {
     const { _id, doctorName: name, patientName: initialPatientName, phone: initialPhone, gender: initialGender, bookingDate: initialBookingDate, appointmentTime: initialAppointmentTime } = appointment;
@@ -18,9 +19,11 @@ const EditBookedAppointment = ({ appointment, onAppointmentUpdated }) => {
         e.preventDefault();
         const form = e.currentTarget;
         const formData = new FormData(form);
+        const {data: tokenData} = await authClient.token();
+        const token = tokenData?.token;
 
         try {
-            const result = await updateAppointment(_id, formData);
+            const result = await updateAppointment(_id, formData, token);
 
             if (result.success) {
                 setIsOpen(false);

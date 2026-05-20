@@ -126,7 +126,7 @@ export async function createBooking(appointmentData, token) {
 }
 
 //update booking
-export async function updateAppointment(id, formData) {
+export async function updateAppointment(id, formData, token) {
     const rawData = Object.fromEntries(formData.entries());
     delete rawData._id; 
 
@@ -134,7 +134,8 @@ export async function updateAppointment(id, formData) {
         const res = await fetch(`${process.env.SERVER_URL}/booking/${id}`, {
             method: 'PATCH',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                authorization: `Bearer ${token}`
             },
             body: JSON.stringify(rawData)
         });
@@ -153,10 +154,13 @@ export async function updateAppointment(id, formData) {
 }
 
 //delete booking
-export async function deleteAppointment(id) {
+export async function deleteAppointment(id, token) {
     try {
         const res = await fetch(`${process.env.SERVER_URL}/booking/${id}`, {
             method: 'DELETE',
+            headers:{
+              authorization: `Bearer ${token}`
+            }
         });
 
         if (!res.ok) {

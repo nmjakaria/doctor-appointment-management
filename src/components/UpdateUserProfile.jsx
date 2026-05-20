@@ -115,13 +115,14 @@ const UpdateUserProfile = () => {
                                         type="button" 
                                         variant="secondary" 
                                         onClick={() => setIsOpen(false)}
+                                        className="bg-secondary text-secondary-foreground"
                                     >
                                         Cancel
                                     </Button>
-                                    <Button 
-                                        color="primary" 
+                                    <Button  
                                         type="submit"
                                         isLoading={loading}
+                                        className="bg-primary text-primary-foreground"
                                     >
                                         Save
                                     </Button>
