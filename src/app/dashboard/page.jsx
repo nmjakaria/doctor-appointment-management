@@ -7,6 +7,11 @@ import Image from 'next/image';
 import { Activity, ShieldCheck, Heart, User as UserIcon } from 'lucide-react';
 import UpdateUserProfile from '@/components/UpdateUserProfile';
 
+export const metadata = {
+  title: "Dashboard",
+  description: "Track, update schedule slots, or cancel your personal active doctor appointments securely.iew and update your personal account information, profile pictures, and notification preferences.",
+};
+
 const Dashboard = async () => {
   const session = await auth.api.getSession({
     headers: await headers()

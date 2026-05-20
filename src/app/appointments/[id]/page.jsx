@@ -8,10 +8,33 @@ import { Card, CardContent, Chip } from "@heroui/react";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 
+export async function generateMetadata({ params }) {
+    const { id } = await params;
+    const reqHeaders = await headers();
+    const tokenData = await auth.api.getToken({
+        headers: reqHeaders
+    });
+    
+    const token = tokenData?.token;
+    const doctor = await getDoctorById(id, token);
+
+    if (!doctor) {
+        return {
+            title: "Doctor Not Found | DocAppoint",
+            description: "The requested doctor profile is unavailable or does not exist.",
+        };
+    }
+
+    return {
+        title: `${doctor.name} - ${doctor.specialty}`,
+        description: `Book an appointment with ${doctor.name} (${doctor.specialty}) at ${doctor.hospital || "our affiliated hospital"}. Experience: ${doctor.experience}.`,
+    };
+}
+
 export default async function DoctorDetailsPage({ params }) {
     const { id } = await params;
     //get token
-    const {token} = await auth.api.getToken({
+    const { token } = await auth.api.getToken({
         headers: await headers()
     })
     const doctor = await getDoctorById(id, token);
@@ -33,7 +56,7 @@ export default async function DoctorDetailsPage({ params }) {
                             className="object-cover w-full h-full"
                         />
                     </div>
-                    
+
                     <Card className="border-none bg-primary/5 p-4">
                         <CardContent className="grid grid-cols-2 gap-4">
                             <div className="text-center p-4 bg-background rounded-2xl shadow-sm">
