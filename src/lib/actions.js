@@ -83,7 +83,9 @@ export const getDoctorById = async (id, token) => {
 export const getRatedDoctors = async () => {
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/rated-doctor`, {
-      cache: "no-store",
+      next: {
+          revalidate: 60,
+        },
     });
 
     if (!res.ok) {
