@@ -7,6 +7,7 @@ import { Stethoscope, Sun, Moon, LogOut, Menu, X } from "lucide-react";
 import { useTheme } from "next-themes";
 import { authClient } from "@/lib/auth-client";
 import toast from "react-hot-toast";
+import Image from "next/image";
 
 // Centralized array configuration for all navigation items
 const NAV_LINKS = [
@@ -44,15 +45,15 @@ export default function Navbar({
   const user = session?.user;
 
   const handleSignOut = async () => {
-        await authClient.signOut({
-            fetchOptions: {
-                onSuccess: () => {
-                    toast.success('Logout successfully');
-                    window.location.href = '/';
-                },
-            },
-        });
-    };
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          toast.success('Logout successfully');
+          window.location.href = '/';
+        },
+      },
+    });
+  };
 
 
 
@@ -61,8 +62,22 @@ export default function Navbar({
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <div className="grid h-9 w-9 place-items-center rounded-xl bg-brand text-brand-foreground">
-            <Stethoscope className="h-5 w-5" />
+          <div className="grid h-10 w-10 place-items-center rounded-lg bg-brand text-brand-foreground">
+            {/* <Stethoscope className="h-5 w-5" /> */}
+            {
+              theme === "dark" ?
+                <Image alt="log"
+                  src="/doctor-appoint-logo-dark.png"
+                  width={35}
+                  height={35}
+                />
+                :
+                <Image alt="log"
+                  src="/doctor-appoint-light-logo.png"
+                  width={35}
+                  height={35}
+                />
+            }
           </div>
           <span className="font-display text-lg font-bold tracking-tight">DocAppoint</span>
         </Link>
@@ -175,7 +190,7 @@ export default function Navbar({
               ) : (
                 <button
                   className="inline-flex h-9 items-center justify-center rounded-md border border-input bg-background px-3 text-xs font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
-                  onClick={() => {handleSignOut() ; setOpen(false); }}
+                  onClick={() => { handleSignOut(); setOpen(false); }}
                 >
                   <LogOut className="mr-2 h-4 w-4" /> Logout
                 </button>

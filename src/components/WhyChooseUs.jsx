@@ -8,7 +8,7 @@ const WhyChooseUs = () => {
   ];
 
   return (
-    <section className="py-16 bg-gray-50 dark:bg-gray-900/50 border-t border-gray-100 dark:border-gray-800 transition-colors duration-300">
+    <section className="py-16 bg-secondary border-t border-secondary transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4">
 
         <div className="text-center mb-12">
@@ -25,7 +25,7 @@ const WhyChooseUs = () => {
           {steps.map((item, index) => (
             <div key={index} className="relative p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center">
 
-              <div className="absolute -top-5 left-6 bg-blue-600 text-white font-bold text-sm px-3 py-1 rounded-full shadow-sm">
+              <div className="absolute -top-5 left-6 bg-primary text-primary-foreground font-bold text-sm px-3 py-1 rounded-full shadow-sm">
                 Step {item.step}
               </div>
               
