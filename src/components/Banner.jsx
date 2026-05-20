@@ -26,7 +26,7 @@ export default function Banner() {
   return (
     <div className="mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-16">
       
-      <div className="relative overflow-hidden rounded-[40px] h-[650px] md:h-[600px] flex flex-col justify-between p-8 md:p-12 lg:p-16 shadow-2xl text-white">
+      <div className="relative overflow-hidden rounded-[40px] h-162.5 md:h-150 flex flex-col justify-between p-8 md:p-12 lg:p-16 shadow-2xl text-white">
         
         <div className="absolute inset-0 w-full h-full -z-10" ref={emblaRef}>
           <div className="flex h-full w-full">

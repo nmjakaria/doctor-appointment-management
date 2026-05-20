@@ -3,14 +3,6 @@
     "development"
   ],
   "hints": {
-    "compat-api/css": [
-      "default",
-      {
-        "ignore": [
-          "backdrop-filter",
-          "border: 1px solid color-mix(in oklab, var(--info) 30%, transparent)"
-        ]
-      }
-    ]
+    "compat-api/css": "off"
   }
 }
