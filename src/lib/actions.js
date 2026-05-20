@@ -79,7 +79,7 @@ export const getDoctorById = async (id, token) => {
     return null;
   }
 };
-
+//rated doctor for showing homepage
 export const getRatedDoctors = async () => {
   try {
     const res = await fetch(`${process.env.SERVER_URL}/rated-doctor`, {
@@ -100,7 +100,7 @@ export const getRatedDoctors = async () => {
 };
 
 //booking
-export async function createBooking(appointmentData) {
+export async function createBooking(appointmentData, token) {
   try {
     const serverUrl = process.env.SERVER_URL;
     
@@ -108,6 +108,7 @@ export async function createBooking(appointmentData) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        authorization: `Bearer ${token}`
       },
       body: JSON.stringify(appointmentData)
     });

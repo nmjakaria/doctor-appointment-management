@@ -13,7 +13,7 @@ export default function BookingButton({ doctor }) {
   const { _id, name, availability, specialty, hospital, location } = doctor;
 
   const [loading, setLoading] = useState(false);
-  
+
   const [isOpen, setIsOpen] = useState(false);
   const [patientName, setPatientName] = useState(user?.name);
   const [phone, setPhone] = useState("");
@@ -35,7 +35,10 @@ export default function BookingButton({ doctor }) {
     }
 
     setLoading(true);
-    
+
+    const {data: tokenData} = await authClient.token();
+    const token = tokenData?.token;
+
     const appointmentData = {
       userId: user?.id,
       userEmail: user?.email,
@@ -52,7 +55,7 @@ export default function BookingButton({ doctor }) {
     };
 
     try {
-      const result = await createBooking(appointmentData);
+      const result = await createBooking(appointmentData, token);
 
       if (result.success) {
         toast.success(`Appointment booked successfully`);
@@ -84,7 +87,7 @@ export default function BookingButton({ doctor }) {
           <Modal.Container className="max-w-xl mx-auto my-8 p-4">
             <Modal.Dialog>
               <Modal.CloseTrigger />
-              
+
               <form onSubmit={handleBooking}>
 
                 <Modal.Header className="p-6 pb-2 flex flex-col gap-1 border-b border-default-100">
@@ -195,11 +198,10 @@ export default function BookingButton({ doctor }) {
                         return (
                           <label
                             key={time}
-                            className={`relative flex items-center justify-center h-11 rounded-xl text-sm font-medium border cursor-pointer select-none transition-all duration-200 ${
-                              isCurrentSelected
+                            className={`relative flex items-center justify-center h-11 rounded-xl text-sm font-medium border cursor-pointer select-none transition-all duration-200 ${isCurrentSelected
                                 ? "border-primary bg-primary text-primary-foreground shadow-sm font-bold"
                                 : "border-default-200 bg-background text-foreground hover:bg-default-50 hover:border-default-300"
-                            }`}
+                              }`}
                           >
                             <input
                               type="radio"
