@@ -28,7 +28,7 @@ const MedicalPartners = () => {
       <Marquee 
         gradient={true} 
         gradientColor="var(--marquee-gradient)"
-        speed={50} 
+        speed={40} 
         pauseOnHover={true}
         direction="left"
       >
