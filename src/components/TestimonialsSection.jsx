@@ -73,7 +73,6 @@ export default function TestimonialsSection() {
                 {reviews.map((review) => (
                     <Card
                         key={review.id}
-                        isHoverable
                         className="border-none bg-muted shadow-md shadow-default-100 p-2"
                     >
                         <CardContent className="space-y-4 justify-between">

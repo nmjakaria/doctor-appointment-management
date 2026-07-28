@@ -68,7 +68,7 @@ export default function Navbar({
                 height={35}
               />
             ) : (
-              <Image alt="log"
+              <Image alt="logo"
                 src="/doctor-appoint-light-logo.png"
                 width={35}
                 height={35}
